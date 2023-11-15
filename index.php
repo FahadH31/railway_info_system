@@ -79,7 +79,52 @@ $Tprices = 'SELECT AgeType, Cost
 $Ticprices = mysqli_query($conn, $Tprices);
 $TicketPrices = mysqli_fetch_all($Ticprices, MYSQLI_ASSOC);  
 
-// remove the queried items from memory
+/*
+
+$username = 'Rajiv'; // Replace this with the username you want to insert
+$userPassword = 'Reddy'; // Replace this with the password
+$location = 'Lomada'; // Replace this with the location
+
+// Check if the username already exists
+$checkQuery = "SELECT COUNT(*) as count FROM User WHERE Username = '$username'";
+$result = $conn->query($checkQuery);
+
+if ($result) {
+    $row = $result->fetch_assoc();
+    if ($row['count'] > 0) {
+        echo "<script>alert('Username already exists. Please choose a different username.');</script>";
+    } else {
+        // Username doesn't exist, proceed with insertion
+        $sql = "INSERT INTO User (Username, UserPassword, Location) VALUES ('$username', '$userPassword', '$location')";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "New record created successfully";
+        } else {
+            echo "<script>alert('Error with Username or Unfilled Cells.');</script>";
+        }
+    }
+} else {
+    echo "<script>alert('Error checking for existing username');</script>";
+
+
+    
+}
+
+*/
+
+// NOTE TO FUTURE KEVAUN -- THIS IS THE FORM STUFF YOU NEED TO CHANGE
+
+/*
+
+<form method="post" action="process_form.php">
+    <input type="text" name="username" placeholder="Username"><br>
+    <input type="password" name="password" placeholder="Password"><br>
+    <input type="text" name="location" placeholder="Location"><br>
+    <input type="submit" value="Submit">
+</form>
+
+*/
+
 
 // close connection
 mysqli_close($conn);
@@ -165,6 +210,7 @@ mysqli_close($conn);
     </tbody>
 </table>
       </div>
+
       <div class="tab-pane fade" id="routes-schedules">
         <h2>Routes & Schedules Content</h2>
 
