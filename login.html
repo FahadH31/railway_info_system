@@ -28,15 +28,15 @@
   
   <!--Sign-Up Form Container-->
   <div class="container">
-    <form action="#" class="sign-up-form">
+    <form action="index.php" class="sign-up-form" method="post">
       <h2 class="text-center mb-4">Log In</h2>
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Username" required>
+        <input type="text" class="form-control" placeholder="Username" name='unlogin' required>
       </div>
       <div class="form-group">
-        <input type="password" class="form-control" placeholder="Password" required>
+        <input type="password" class="form-control" placeholder="Password" name='uplogin' required>
       </div>
-      <button type="submit" class="btn btn-primary btn-block">Login</button><br>
+      <button type="submit" class="btn btn-primary btn-block" value="Login">Login</button><br>
       <p>Don't have an account? <a href = "signup.html">Sign Up</a>.</p>
     </form>
   </div>

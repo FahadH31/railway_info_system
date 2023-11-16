@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,15 +31,15 @@
   
   <!--Sign-Up Form Container-->
   <div class="container">
-    <form action="#" class="sign-up-form">
+    <form action="index.php" class="sign-up-form" method="post">
       <h2 class="text-center mb-4">Sign Up</h2>
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Username" required>
+        <input type="text" class="form-control" id="username" placeholder="Username" name="username" required>
       </div>
       <div class="form-group">
-        <input type="password" class="form-control" placeholder="Password" required>
+        <input type="password" class="form-control" id="userPassword" placeholder="Password" name="userPassword" required>
       </div>
-      <button type="submit" class="btn btn-primary btn-block">Sign Up</button><br>
+      <input type="submit" class="btn btn-primary btn-block" value="Signup"><br>
       <p>Already have an account? <a href = "login.html">Login</a>.</p>
     </form>
   </div>

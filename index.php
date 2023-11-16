@@ -1,7 +1,7 @@
 <?php
-
+  session_start();
 // connect to the database
-$conn = mysqli_connect('localhost:3306', 'root', 'fahad1306', 'RailwaySystemWebsite');
+$conn = mysqli_connect('localhost:3306', 'root', '123456', 'RailwaySystemWebsite');
 
 // check connection
 if (!$conn) {
@@ -77,13 +77,18 @@ $WeekdayRoutes = mysqli_fetch_all($WdayRoute, MYSQLI_ASSOC);
 $Tprices = 'SELECT AgeType, Cost 
             FROM Ticket';
 $Ticprices = mysqli_query($conn, $Tprices);
-$TicketPrices = mysqli_fetch_all($Ticprices, MYSQLI_ASSOC);  
+$TicketPrices = mysqli_fetch_all($Ticprices, MYSQLI_ASSOC);
 
-/*
+// ACCOUNT SIGNUP STUFF
 
-$username = 'Rajiv'; // Replace this with the username you want to insert
-$userPassword = 'Reddy'; // Replace this with the password
-$location = 'Lomada'; // Replace this with the location
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+  if(isset($_POST['username'],$_POST['userPassword'])) {
+
+    if($_POST['username'] != "" && $_POST['userPassword'] != "" ) {
+
+$username = $_POST['username'];
+$userPassword = $_POST['userPassword'];
 
 // Check if the username already exists
 $checkQuery = "SELECT COUNT(*) as count FROM User WHERE Username = '$username'";
@@ -92,38 +97,66 @@ $result = $conn->query($checkQuery);
 if ($result) {
     $row = $result->fetch_assoc();
     if ($row['count'] > 0) {
-        echo "<script>alert('Username already exists. Please choose a different username.');</script>";
+      echo "<script>alert('Username already exists. Please choose a different username.');</script>";
+      echo "<script>window.location.href = 'signup.html';</script>";
+      exit();
+
     } else {
         // Username doesn't exist, proceed with insertion
-        $sql = "INSERT INTO User (Username, UserPassword, Location) VALUES ('$username', '$userPassword', '$location')";
+        $sql = "INSERT INTO User (Username, UserPassword) VALUES ('$username', '$userPassword')";
 
         if ($conn->query($sql) === TRUE) {
-            echo "New record created successfully";
+          echo "<script>alert('Account Successfully Created. Please login');</script>";
+          echo "<script>window.location.href = 'login.html';</script>";
+          exit();
         } else {
             echo "<script>alert('Error with Username or Unfilled Cells.');</script>";
         }
     }
 } else {
     echo "<script>alert('Error checking for existing username');</script>";
-
-
-    
+    }
+  }
+}
 }
 
-*/
 
-// NOTE TO FUTURE KEVAUN -- THIS IS THE FORM STUFF YOU NEED TO CHANGE
+// ACCOUNT LOGIN STUFF
 
-/*
 
-<form method="post" action="process_form.php">
-    <input type="text" name="username" placeholder="Username"><br>
-    <input type="password" name="password" placeholder="Password"><br>
-    <input type="text" name="location" placeholder="Location"><br>
-    <input type="submit" value="Submit">
-</form>
 
-*/
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (isset($_POST['unlogin'], $_POST['uplogin'])) {
+      $usernamelogin = $_POST['unlogin'];
+      $userPasswordlogin = $_POST['uplogin'];
+
+      // Check if the username exists and password matches
+      $checkQuery = "SELECT UserPassword FROM User WHERE Username = '$usernamelogin'";
+      $result2 = $conn->query($checkQuery);
+
+      if ($result2 && $result2->num_rows > 0) {
+          $row2 = $result2->fetch_assoc();
+          $storedPassword = $row2['UserPassword'];
+
+          // Check if the password matches
+          if ($userPasswordlogin === $storedPassword) {
+            echo "<script>alert('Successful Login');</script>";
+              $_SESSION['logged_in'] = true;
+              $_SESSION['username'] = $usernamelogin;
+              echo "<script>window.location.href = 'index.php';</script>";
+              exit();
+          } else {
+              echo "<script>alert('Credentials do not match');</script>";
+          }
+      } else {
+          echo "<script>alert('Username does not exist');</script>";
+      }
+      
+      exit();
+  }
+}
+
+
 
 
 // close connection
@@ -149,21 +182,34 @@ mysqli_close($conn);
 
 <body>
   <!-- Navigation Bar -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-expand-lg navbar-dark">
     <a class="navbar-brand" href="#">RS</a>
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="index.php">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">About Us</a>
-      </li>
+        <li class="nav-item">
+            <a class="nav-link" href="index.php">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">About Us</a>
+        </li>
     </ul>
-    <a id="login-link" class="nav-link" href="signup.html">Login/Signup</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+    <?php
+
+    // Check if the user is logged in (based on the session variable)
+    if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+        // Show logout button if logged in
+        echo '<form action="logout.php" method="post"><button type="submit" class="btn btn-link nav-link">Logout</button></form>';
+    } else {
+        // Show the login/signup link if not logged in
+        echo '<a id="login-link" class="nav-link" href="signup.html">Login/Signup</a>';
+    }
+    ?>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
     </button>
-  </nav>
+</nav>
+
+
 
   <!-- Main Content -->
   <div id="main-content">
