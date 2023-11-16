@@ -1,0 +1,41 @@
+/* Add your custom CSS here if needed */
+body {
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f1f1f1;
+  }
+  
+  .navbar {
+    background-color: #F77A36;
+  }
+
+  .navbar-dark .navbar-nav .nav-link {
+    color: #ffffff;
+  }
+
+  .navbar-dark .navbar-toggler-icon {
+    background-color: #ffffff;
+  }
+
+  .container {
+    width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 40%;
+    transform: translateY(-40%);
+    text-align: center;
+  }
+
+  .btn-primary{
+    background-color: #F77A36;
+    border: #F77A36;
+  }
+
+  .btn-primary:hover{
+    background-color: #e26420;
+  }
+  

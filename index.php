@@ -1,7 +1,7 @@
 <?php
 
 // connect to the database
-$conn = mysqli_connect('localhost:3306', 'root', '123456', 'RailwaySystemWebsite');
+$conn = mysqli_connect('localhost:3306', 'root', 'fahad1306', 'RailwaySystemWebsite');
 
 // check connection
 if (!$conn) {
@@ -153,13 +153,13 @@ mysqli_close($conn);
     <a class="navbar-brand" href="#">RS</a>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Home</a>
+        <a class="nav-link" href="index.php">Home</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">About Us</a>
       </li>
     </ul>
-    <a id="login-link" class="nav-link" href="#">Login/Signup</a>
+    <a id="login-link" class="nav-link" href="signup.html">Login/Signup</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
