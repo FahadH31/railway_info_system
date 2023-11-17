@@ -4,5 +4,23 @@
 - At least one Web service that generates an XML document or JSON
 - At least one Web service (SOAP/REST) that interacts with a database
 - Detailed ReadME document on how to install/setup project.
-- Potentially Expand on Database
 - About Us Page
+
+
+
+
+Currently Targetted Tasks
+- Potentially Expand on Database
+- Purhcase Tickets - Kevaun
+
+
+
+Completed
+- Add information to display users owned tickets - Kevaun
+
+
+Kev notes -- 
+
+Should I add the buying tickets?
+
+

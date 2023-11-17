@@ -10,7 +10,7 @@ if (!$conn) {
 
 //View 1
 
-$RI = 'SELECT Routes.RouteID, Routes.Duration, Routes.Distance, Trains.TrainID, s1.Location AS StartStation, s1.Location AS EndStation FROM Routes JOIN Trains ON Routes.OperatingTrains = Trains.TrainID JOIN Stations s1 ON Routes.StartStation = s1.StationID JOIN Stations s2 ON Routes.EndStation = s2.StationID';
+$RI = 'SELECT Routes.RouteID, Routes.Duration, Routes.Distance, Trains.TrainID, s1.Location AS StartStation, s2.Location AS EndStation FROM Routes JOIN Trains ON Routes.OperatingTrains = Trains.TrainID JOIN Stations s1 ON Routes.StartStation = s1.StationID JOIN Stations s2 ON Routes.EndStation = s2.StationID';
 $RI2 = mysqli_query($conn, $RI);
 $RouteInfo = mysqli_fetch_all($RI2, MYSQLI_ASSOC);
 
@@ -79,6 +79,9 @@ $Tprices = 'SELECT AgeType, Cost
 $Ticprices = mysqli_query($conn, $Tprices);
 $TicketPrices = mysqli_fetch_all($Ticprices, MYSQLI_ASSOC);
 
+// View 11
+
+
 // ACCOUNT SIGNUP STUFF
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -89,6 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $username = $_POST['username'];
 $userPassword = $_POST['userPassword'];
+$userLocation = $_POST['location'];
 
 // Check if the username already exists
 $checkQuery = "SELECT COUNT(*) as count FROM User WHERE Username = '$username'";
@@ -103,7 +107,7 @@ if ($result) {
 
     } else {
         // Username doesn't exist, proceed with insertion
-        $sql = "INSERT INTO User (Username, UserPassword) VALUES ('$username', '$userPassword')";
+        $sql = "INSERT INTO User (Username, UserPassword,Location) VALUES ('$username', '$userPassword', '$userLocation')";
 
         if ($conn->query($sql) === TRUE) {
           echo "<script>alert('Account Successfully Created. Please login');</script>";
@@ -122,7 +126,6 @@ if ($result) {
 
 
 // ACCOUNT LOGIN STUFF
-
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -147,12 +150,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               exit();
           } else {
               echo "<script>alert('Credentials do not match');</script>";
+              echo "<script>window.location.href = 'login.html';</script>";
+              exit();
           }
       } else {
           echo "<script>alert('Username does not exist');</script>";
+          echo "<script>window.location.href = 'login.html';</script>";
+          exit();
       }
       
       exit();
+  }
+}
+
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+  $loggedInUsername = $_SESSION['username'];
+
+  // Query to fetch tickets owned by the logged-in user
+  $getUserTicketsQuery = "SELECT UT.UserTicketID, UT.RouteID, UT.TicketType, T.Cost
+                          FROM UserTickets UT
+                          JOIN Ticket T ON UT.UserTicketID = T.TicketID
+                          WHERE UT.Username = '$loggedInUsername'";
+
+  // Execute the query
+  $userTicketsResult = mysqli_query($conn, $getUserTicketsQuery);
+
+  if ($userTicketsResult) {
+      $userTickets = mysqli_fetch_all($userTicketsResult, MYSQLI_ASSOC);
+  } else {
+      echo "Error retrieving user tickets: " . mysqli_error($conn);
   }
 }
 
@@ -209,8 +235,15 @@ mysqli_close($conn);
   <div id="main-content">
     <!-- Tabs -->
     <ul class="nav nav-tabs flex-column" id="myTabs">
+    <?php
+        // Check if the user is logged in (based on the session variable)
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+            // Show "My Tickets" tab if logged in
+            echo '<li class="nav-item"><a class="nav-link" href="#my-tickets" data-toggle="tab">My Tickets</a></li>';
+        }
+        ?>
       <li class="tab-item">
-        <a class="nav-link active" id="buy-tickets-tab" data-toggle="tab" href="#buy-tickets">Buy Tickets</a>
+        <a class="nav-link" id="buy-tickets-tab" data-toggle="tab" href="#buy-tickets">Buy Tickets</a>
       </li>
       <li class="tab-item">
         <a class="nav-link" id="routes-schedules-tab" data-toggle="tab" href="#routes-schedules">Routes & Schedules</a>
@@ -228,6 +261,39 @@ mysqli_close($conn);
 
     <!-- Tab Content -->
     <div class="tab-content">
+
+    <?php
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+
+    echo '<div class="tab-pane fade" id="my-tickets">';
+    echo '<h2>My Tickets</h2>';
+
+
+    echo '<table>';
+    echo '<thead>';
+    echo '<tr>';
+    echo '<th>TicketID</th>';
+    echo '<th>RouteID</th>';
+    echo '<th>TicketType</th>';
+    echo '<th>Cost</th>';
+    echo '</tr>';
+    echo '</thead>';
+    echo '<tbody>';
+    
+    foreach ($userTickets as $ticket) {
+        echo '<tr>';
+        echo '<td>' . $ticket["UserTicketID"] . '</td>';
+        echo '<td>' . $ticket["RouteID"] . '</td>';
+        echo '<td>' . $ticket["TicketType"] . '</td>';
+        echo '<td>' . $ticket["Cost"] . '</td>';
+        echo '</tr>';
+    }
+    echo '</tbody>';
+    echo '</table>';
+    echo '</div>';
+}
+?>
+            
       <div class="tab-pane fade show active" id="buy-tickets">
         <h2>Buy Tickets Content</h2>
 
