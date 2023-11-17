@@ -5,7 +5,7 @@ $conn = mysqli_connect('localhost:3306', 'root', '123456', 'RailwaySystemWebsite
 
 // check connection
 if (!$conn) {
-    echo 'Connection error: ' . mysqli_connect_error();
+  echo 'Connection error: ' . mysqli_connect_error();
 }
 
 //View 1
@@ -64,12 +64,12 @@ $PossibleDestination = mysqli_fetch_all($DestRoute, MYSQLI_ASSOC);
 //View 8
 $TRange = 'SELECT Routes.RouteID, RunningTimes.StartTime, Routes.StartStation FROM Routes JOIN RunningTimes ON Routes.RouteID = RunningTimes.RouteID WHERE RunningTimes.StartTime BETWEEN "09:00:00" AND "13:00:00"';
 $TimeRange = mysqli_query($conn, $TRange);
-$RouteStartBetweenTimeRange = mysqli_fetch_all($TimeRange, MYSQLI_ASSOC); 
+$RouteStartBetweenTimeRange = mysqli_fetch_all($TimeRange, MYSQLI_ASSOC);
 
 //View 9
 $WeekdayRoute = 'SELECT * 
                 FROM RunningTimes 
-                WHERE NOT (Dayofweek = "Sunday" OR Dayofweek = "Saturday")'; 
+                WHERE NOT (Dayofweek = "Sunday" OR Dayofweek = "Saturday")';
 $WdayRoute = mysqli_query($conn, $WeekdayRoute);
 $WeekdayRoutes = mysqli_fetch_all($WdayRoute, MYSQLI_ASSOC);
 
@@ -163,12 +163,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 mysqli_close($conn);
 
 ?>
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -182,8 +176,8 @@ mysqli_close($conn);
 
 <body>
   <!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="#">RS</a>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand"><img id="logo" src="train-icon.png"></a>
     <ul class="navbar-nav mr-auto">
         <li class="nav-item">
             <a class="nav-link" href="index.php">Home</a>
@@ -200,7 +194,7 @@ mysqli_close($conn);
         echo '<form action="logout.php" method="post"><button type="submit" class="btn btn-link nav-link">Logout</button></form>';
     } else {
         // Show the login/signup link if not logged in
-        echo '<a id="login-link" class="nav-link" href="signup.html">Login/Signup</a>';
+        echo '<a id="login-link" class="nav-link btn btn-primary" href="signup.html">Login/Signup</a>';
     }
     ?>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -215,19 +209,19 @@ mysqli_close($conn);
   <div id="main-content">
     <!-- Tabs -->
     <ul class="nav nav-tabs flex-column" id="myTabs">
-      <li class="nav-item">
+      <li class="tab-item">
         <a class="nav-link active" id="buy-tickets-tab" data-toggle="tab" href="#buy-tickets">Buy Tickets</a>
       </li>
-      <li class="nav-item">
+      <li class="tab-item">
         <a class="nav-link" id="routes-schedules-tab" data-toggle="tab" href="#routes-schedules">Routes & Schedules</a>
       </li>
-      <li class="nav-item">
+      <li class="tab-item">
         <a class="nav-link" id="trains-tab" data-toggle="tab" href="#trains">Trains</a>
       </li>
-      <li class="nav-item">
+      <li class="tab-item">
         <a class="nav-link" id="stations-tab" data-toggle="tab" href="#stations">Stations</a>
       </li>
-      <li class="nav-item">
+      <li class="tab-item">
         <a class="nav-link" id="edu-info-tab" data-toggle="tab" href="#edu-info">Educational Information</a>
       </li>
     </ul>
@@ -238,52 +232,70 @@ mysqli_close($conn);
         <h2>Buy Tickets Content</h2>
 
         <table>
-    <thead>
-        <tr>
-            <th>Age Type</th>
-            <th>Cost</th>
-            <!-- Add more table headers if there are additional columns -->
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($TicketPrices as $TicketPrices): ?>
+          <thead>
             <tr>
-                <td><?php echo $TicketPrices['AgeType']; ?></td>
-                <td><?php echo $TicketPrices['Cost']; ?></td>
-                <!-- Display additional columns accordingly -->
+              <th>Age Type</th>
+              <th>Cost</th>
+              <!-- Add more table headers if there are additional columns -->
             </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+          </thead>
+          <tbody>
+            <?php foreach ($TicketPrices as $TicketPrices): ?>
+              <tr class="tickets-table">
+                <td>
+                  <?php echo $TicketPrices['AgeType']; ?>
+                </td>
+                <td>
+                  <?php echo $TicketPrices['Cost']; ?>
+                </td>
+                <!-- Display additional columns accordingly -->
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
       </div>
 
       <div class="tab-pane fade" id="routes-schedules">
-        <h2>Routes & Schedules Content</h2>
+        <h2>Routes & Schedules</h2>
 
-        <table>
-    <thead>
-        <tr>
-            <th>RunningTimeID</th>
-            <th>RouteID</th>
-            <th>StartTime</th>
-            <th>EndTime</th>
-            <th>Day of Week</th>
-            <!-- Add more table headers if there are additional columns -->
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($WeekdayRoutes as $WeekdayRoutes): ?>
+        <table style = "border: 1px solid black;" class= "route-info-table">
+          <thead>
             <tr>
-                <td><?php echo $WeekdayRoutes['RunningTimeID']; ?></td>
-                <td><?php echo $WeekdayRoutes['RouteID']; ?></td>
-                <td><?php echo $WeekdayRoutes['StartTime']; ?></td>
-                <td><?php echo $WeekdayRoutes['EndTime']; ?></td>
-                <td><?php echo $WeekdayRoutes['DayOfWeek']; ?></td>
-                <!-- Display additional columns accordingly -->
+              <th>Route No.</th>
+              <th>Duration</th>
+              <th>Distance (km)</th>
+              <th>Train No.</th>
+              <th>From</th>
+              <th>To</th>
+              <!-- Add more table headers if there are additional columns -->
             </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+          </thead>
+          <tbody>
+            <?php foreach ($RouteInfo as $RI): ?>
+              <tr>
+                <td>
+                  <?php echo $RI['RouteID']; ?>
+                </td>
+                <td>
+                  <?php echo $RI['Duration']; ?>
+                </td>
+                <td>
+                  <?php echo $RI['Distance']; ?>
+                </td>
+                <td>
+                  <?php echo $RI['TrainID']; ?>
+                </td>
+                <td>
+                  <?php echo $RI['StartStation']; ?>
+                </td>
+                <td>
+                  <?php echo $RI['EndStation']; ?>
+                </td>
+                <!-- Display additional columns accordingly -->
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
 
       </div>
       <div class="tab-pane fade" id="trains">

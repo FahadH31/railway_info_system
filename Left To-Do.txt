@@ -1,0 +1,8 @@
+- All Views Content 
+- A web page that uses an external REST/JSON API (e.g. Twitter)
+	- At least two queries associated with the functionality (e.g. saving Tweets in the database)
+- At least one Web service that generates an XML document or JSON
+- At least one Web service (SOAP/REST) that interacts with a database
+- Detailed ReadME document on how to install/setup project.
+- Potentially Expand on Database
+- About Us Page

@@ -1,9 +1,15 @@
-/* Add your custom CSS here if needed */
 body {
     justify-content: center;
     align-items: center;
     height: 100vh;
     background-color: #f1f1f1;
+    font-size: 14pt;
+  }
+  
+  #logo{
+    width: 50px;
+    height: 45px;
+    padding: 0px;
   }
   
   .navbar {
@@ -30,12 +36,15 @@ body {
     text-align: center;
   }
 
-  .btn-primary{
+  .btn-dark{
     background-color: #F77A36;
     border: #F77A36;
+    transition: 0.4s;
   }
 
-  .btn-primary:hover{
-    background-color: #e26420;
+  .btn-dark:hover{
+    background-color: #F77A36;
+    opacity: 50%;
+    transition: 0.4s;
   }
   

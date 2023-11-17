@@ -1,33 +1,100 @@
 body {
-    background-color: #FFFFFF;
-  }
+  background-color: #FFFFFF;
+  font-size: 14pt;
+}
 
-  .navbar {
-    background-color: #F77A36;
-  }
+/*Navbar Formatting*/
+#logo{
+  width: 50px;
+  height: 45px;
+  padding: 0px;
+}
 
-  .navbar-dark .navbar-nav .nav-link {
-    color: #ffffff;
-  }
+.navbar {
+  background-color: #F77A36;
+  font-weight: 500;
+}
 
-  .navbar-dark .navbar-toggler-icon {
-    background-color: #ffffff;
-  }
+.navbar-dark .navbar-nav .nav-link {
+  color: #ffffff;
+}
 
-  #login-link {
-    margin-left: auto;
-  }
+.navbar-dark .navbar-toggler-icon {
+  background-color: #ffffff;
+}
 
-  #main-content {
-    display: flex;
-    justify-content: left;
-    padding: 20px;
-  }
+#login-link {
+  margin-left: auto;
+  color: white;
+}
 
-  #myTabs {
-    flex-direction: column;
-  }
+.btn-primary{
+  border-radius: 20px;
+  font-size: 14pt;
+  transition: 0.4s;
+  font-weight: 500;
+}
 
-  .tab-content {
-    margin-left: 30px;
-  }
+.btn-primary:hover{
+  transition: 0.4s;
+}
+
+
+/*Tab Formatting*/
+
+/* Active Tab*/
+.nav-tabs .nav-link.active {
+  background-color: black;
+  color: white; 
+  border-radius: 15px;
+}
+
+/* Inactive Tabs */
+.nav-tabs .nav-link {
+  background-color: #f6f6f6;
+  color: #333; 
+  transition: 0.4s;
+}
+
+/* Hover Effect for Tabs */
+.nav-tabs .nav-link:hover {
+  transition: 0.4s;
+}
+
+/*Tab List*/
+#myTabs{
+  position: fixed;
+  border-radius: 15px;
+  font-weight: 500;
+}
+
+#main-content {
+  display: flex;
+  justify-content: left;
+  padding: 20px;
+}
+
+.tab-content {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+/*Table Formatting*/
+td{
+  padding: 10px;
+}
+
+th{
+  background-color: #362f4b;
+  color: white;
+  padding: 10px;
+}
+
+tr:nth-child(even) {
+  background-color: #f6f6f6;
+}
+
+table{
+  margin: 30px;
+}
