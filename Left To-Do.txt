@@ -7,7 +7,7 @@
 - About Us Page
 - Size Responsive Sidebars
 - Fix ALL OF KEVAUNS CSS (When you are logged in and logged out the buy tickets tab shifts for SOME REASON IDKkKKKK)
-
+- Fix when the website has to scroll down smn weird happens (you can see it when a user has a bunch of tickets in the my ticket tabs)
 
 
 

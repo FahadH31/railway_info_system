@@ -163,23 +163,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 }
 
+//MY TICKETS QUERY
+
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
   $loggedInUsername = $_SESSION['username'];
 
   // Query to fetch tickets owned by the logged-in user
-  $getUserTicketsQuery = "SELECT UT.UserTicketID, UT.RouteID, UT.TicketType, T.Cost
-                          FROM UserTickets UT
-                          JOIN Ticket T ON UT.UserTicketID = T.TicketID
-                          WHERE UT.Username = '$loggedInUsername'";
+  $getUserTicketsQuery = "SELECT UserTicketID, RouteID, TicketType FROM UserTickets WHERE Username = '$loggedInUsername'";
 
   // Execute the query
   $userTicketsResult = mysqli_query($conn, $getUserTicketsQuery);
 
   if ($userTicketsResult) {
       $userTickets = mysqli_fetch_all($userTicketsResult, MYSQLI_ASSOC);
-  } else {
-      echo "Error retrieving user tickets: " . mysqli_error($conn);
-  }
+}
 }
 
 // PURCHASE TICKET STUFF
@@ -304,7 +301,6 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
   echo '<th>TicketID</th>';
   echo '<th>RouteID</th>';
   echo '<th>TicketType</th>';
-  echo '<th>Cost</th>';
   echo '</tr>';
   echo '</thead>';
   echo '<tbody>';
@@ -314,7 +310,6 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
       echo '<td>' . $ticket["UserTicketID"] . '</td>';
       echo '<td>' . $ticket["RouteID"] . '</td>';
       echo '<td>' . $ticket["TicketType"] . '</td>';
-      echo '<td>' . $ticket["Cost"] . '</td>';
       echo '</tr>';
   }
   
@@ -380,9 +375,9 @@ echo '<form class="but-ticket-form" style="margin-left: 7vw" method="post">
         <label for="2006">Route 2006</label>
 
         <div class="ticket-buttons">
-          <button type="submit" name="purchase" value="adult">Purchase Adult Ticket</button>
-          <button type="submit" name="purchase" value="child">Purchase Child Ticket</button>
-          <button type="submit" name="purchase" value="senior">Purchase Senior Ticket</button>
+          <button type="submit" name="purchase" value="Adult">Purchase Adult Ticket</button>
+          <button type="submit" name="purchase" value="Child">Purchase Child Ticket</button>
+          <button type="submit" name="purchase" value="Senior">Purchase Senior Ticket</button>
         </div>
       </form>';
         } else {
