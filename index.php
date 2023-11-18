@@ -165,19 +165,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 //MY TICKETS QUERY
 
+// MY TICKETS QUERY
+
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
   $loggedInUsername = $_SESSION['username'];
 
   // Query to fetch tickets owned by the logged-in user
-  $getUserTicketsQuery = "SELECT UserTicketID, RouteID, TicketType FROM UserTickets WHERE Username = '$loggedInUsername'";
+// Query to fetch tickets owned by the logged-in user
+$getUserTicketsQuery = "SELECT RouteID, TicketType, COUNT(*) as TicketCount FROM UserTickets WHERE Username = '$loggedInUsername' GROUP BY RouteID, TicketType";
 
-  // Execute the query
-  $userTicketsResult = mysqli_query($conn, $getUserTicketsQuery);
+// Execute the query
+$userTicketsResult = mysqli_query($conn, $getUserTicketsQuery);
 
-  if ($userTicketsResult) {
-      $userTickets = mysqli_fetch_all($userTicketsResult, MYSQLI_ASSOC);
+if ($userTicketsResult) {
+    $userTickets = mysqli_fetch_all($userTicketsResult, MYSQLI_ASSOC);
 }
+
 }
+
 
 // PURCHASE TICKET STUFF
 
@@ -198,7 +203,8 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
           // Insert ticket details into UserTickets table
           $insertQuery = "INSERT INTO UserTickets (Username, RouteID, TicketType) VALUES ('$username', '$routeID', '$ticketType')";
           if (mysqli_query($conn, $insertQuery)) {
-              echo "<script>alert('Ticket purchased successfully.');</script>";
+            header("Location: {$_SERVER['REQUEST_URI']}");
+            exit();
           } else {
               echo "<script>alert('Error purchasing ticket.');</script>";
           }
@@ -298,23 +304,24 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
   echo '<table>';
   echo '<thead>';
   echo '<tr>';
-  echo '<th>TicketID</th>';
   echo '<th>RouteID</th>';
   echo '<th>TicketType</th>';
+  echo '<th>TicketCount</th>';
   echo '</tr>';
   echo '</thead>';
   echo '<tbody>';
   
   foreach ($userTickets as $ticket) {
       echo '<tr>';
-      echo '<td>' . $ticket["UserTicketID"] . '</td>';
       echo '<td>' . $ticket["RouteID"] . '</td>';
       echo '<td>' . $ticket["TicketType"] . '</td>';
+      echo '<td>' . $ticket["TicketCount"] . '</td>';
       echo '</tr>';
   }
   
   echo '</tbody>';
   echo '</table>';
+  
   echo '</div>';
 }
 ?>
