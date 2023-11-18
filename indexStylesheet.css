@@ -80,7 +80,6 @@ body {
   text-align: center;
 }
 
-/*Table Formatting*/
 td{
   padding: 10px;
 }
@@ -97,4 +96,37 @@ tr:nth-child(even) {
 
 table{
   margin: 30px;
+}
+
+.hflex {
+  display: flex;
+  flex: 1;
+}
+
+.but-ticket-form input[type="radio"],
+.but-ticket-form label {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.horizontal-table {
+  border-collapse: collapse;
+  margin-left: 50px;
+}
+
+.horizontal-table th,
+.horizontal-table td {
+  border: 1px solid #000;
+  padding: 8px;
+}
+
+/* Display table rows horizontally */
+.horizontal-table tbody tr {
+  display: flex;
+}
+
+/* Ensure table headers align with respective data */
+.horizontal-table thead th {
+  flex: 1;
+  text-align: center;
 }

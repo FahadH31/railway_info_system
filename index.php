@@ -182,6 +182,37 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
   }
 }
 
+// PURCHASE TICKET STUFF
+
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+  if (isset($_POST['purchase'], $_POST['Route'])) {
+      $ticketType = $_POST['purchase'];
+      $routeID = $_POST['Route'];
+      $username = $_SESSION['username'];
+
+      // Fetch the cost of the ticket based on the selected ticket type and route
+      $ticketQuery = "SELECT Cost FROM Ticket WHERE AgeType = '$ticketType'";
+      $ticketResult = mysqli_query($conn, $ticketQuery);
+
+      if ($ticketResult && $ticketResult->num_rows > 0) {
+          $ticket = mysqli_fetch_assoc($ticketResult);
+          $cost = $ticket['Cost'];
+
+          // Insert ticket details into UserTickets table
+          $insertQuery = "INSERT INTO UserTickets (Username, RouteID, TicketType) VALUES ('$username', '$routeID', '$ticketType')";
+          if (mysqli_query($conn, $insertQuery)) {
+              echo "<script>alert('Ticket purchased successfully.');</script>";
+          } else {
+              echo "<script>alert('Error purchasing ticket.');</script>";
+          }
+      } else {
+          echo "<script>alert('Ticket not found.');</script>";
+      }
+  }
+}
+
+
+
 
 
 
@@ -264,61 +295,106 @@ mysqli_close($conn);
 
     <?php
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+  echo '<div class="tab-pane fade" id="my-tickets">';
+  echo '<h2>My Tickets</h2>';
 
-    echo '<div class="tab-pane fade" id="my-tickets">';
-    echo '<h2>My Tickets</h2>';
-
-
-    echo '<table>';
-    echo '<thead>';
-    echo '<tr>';
-    echo '<th>TicketID</th>';
-    echo '<th>RouteID</th>';
-    echo '<th>TicketType</th>';
-    echo '<th>Cost</th>';
-    echo '</tr>';
-    echo '</thead>';
-    echo '<tbody>';
-    
-    foreach ($userTickets as $ticket) {
-        echo '<tr>';
-        echo '<td>' . $ticket["UserTicketID"] . '</td>';
-        echo '<td>' . $ticket["RouteID"] . '</td>';
-        echo '<td>' . $ticket["TicketType"] . '</td>';
-        echo '<td>' . $ticket["Cost"] . '</td>';
-        echo '</tr>';
-    }
-    echo '</tbody>';
-    echo '</table>';
-    echo '</div>';
+  echo '<table>';
+  echo '<thead>';
+  echo '<tr>';
+  echo '<th>TicketID</th>';
+  echo '<th>RouteID</th>';
+  echo '<th>TicketType</th>';
+  echo '<th>Cost</th>';
+  echo '</tr>';
+  echo '</thead>';
+  echo '<tbody>';
+  
+  foreach ($userTickets as $ticket) {
+      echo '<tr>';
+      echo '<td>' . $ticket["UserTicketID"] . '</td>';
+      echo '<td>' . $ticket["RouteID"] . '</td>';
+      echo '<td>' . $ticket["TicketType"] . '</td>';
+      echo '<td>' . $ticket["Cost"] . '</td>';
+      echo '</tr>';
+  }
+  
+  echo '</tbody>';
+  echo '</table>';
+  echo '</div>';
 }
 ?>
             
       <div class="tab-pane fade show active" id="buy-tickets">
-        <h2>Buy Tickets Content</h2>
+        <h2 style="margin-left:7vw ">Buy Tickets Content</h2>
+        
+        <table style="margin-left: 27vw">
+  <thead>
+    <tr>
+      <th>Age Type</th>
+      <?php foreach ($TicketPrices as $TicketPrice): ?>
+        <th><?php echo $TicketPrice['AgeType']; ?></th>
+      <?php endforeach; ?>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cost</td>
+      <?php foreach ($TicketPrices as $TicketPrice): ?>
+        <td><?php echo $TicketPrice['Cost']; ?></td>
+      <?php endforeach; ?>
+    </tr>
+  </tbody>
+</table>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Age Type</th>
-              <th>Cost</th>
-              <!-- Add more table headers if there are additional columns -->
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($TicketPrices as $TicketPrices): ?>
-              <tr class="tickets-table">
-                <td>
-                  <?php echo $TicketPrices['AgeType']; ?>
-                </td>
-                <td>
-                  <?php echo $TicketPrices['Cost']; ?>
-                </td>
-                <!-- Display additional columns accordingly -->
-              </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
+
+        <?php
+
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+  // Show logout button if logged in
+
+echo '<style>
+        .but-ticket-form input[type="radio"],
+        .but-ticket-form label {
+          display: inline-block;
+          margin-right: 10px;
+        }
+        .but-ticket-form .ticket-buttons {
+          margin-top: 10px;
+          margin-left: 30px;
+        }
+      </style>';
+
+echo '<form class="but-ticket-form" style="margin-left: 7vw" method="post">
+        <p>What Route Would you like to take?</p>
+        <input type="radio" id="2001" name="Route" value="2001">
+        <label for="2001">Route 2001</label>
+        <input type="radio" id="2002" name="Route" value="2002">
+        <label for="2002">Route 2002</label>
+        <input type="radio" id="2003" name="Route" value="2003">
+        <label for="2003">Route 2003</label>
+        <input type="radio" id="2004" name="Route" value="2004">
+        <label for="2004">Route 2004</label>
+        <input type="radio" id="2005" name="Route" value="2005">
+        <label for="2005">Route 2005</label>
+        <input type="radio" id="2006" name="Route" value="2006">
+        <label for="2006">Route 2006</label>
+
+        <div class="ticket-buttons">
+          <button type="submit" name="purchase" value="adult">Purchase Adult Ticket</button>
+          <button type="submit" name="purchase" value="child">Purchase Child Ticket</button>
+          <button type="submit" name="purchase" value="senior">Purchase Senior Ticket</button>
+        </div>
+      </form>';
+        } else {
+  // Show the login/signup link if not logged in
+
+        }
+
+        ?>
+
+        
+        
+        
       </div>
 
       <div class="tab-pane fade" id="routes-schedules">

@@ -3,8 +3,10 @@
 	- At least two queries associated with the functionality (e.g. saving Tweets in the database)
 - At least one Web service that generates an XML document or JSON
 - At least one Web service (SOAP/REST) that interacts with a database
-- Detailed ReadME document on how to install/setup project.
+- Detailed ReadME document on how to install/setup project. ( I think this is the report stuff)
 - About Us Page
+- Size Responsive Sidebars
+- Fix ALL OF KEVAUNS CSS (When you are logged in and logged out the buy tickets tab shifts for SOME REASON IDKkKKKK)
 
 
 
@@ -19,8 +21,5 @@ Completed
 - Add information to display users owned tickets - Kevaun
 
 
-Kev notes -- 
-
-Should I add the buying tickets?
 
 
