@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 // Connect to the database
 $conn = mysqli_connect('localhost:3306', 'root', 'fahad1306', 'RailwaySystemWebsite');
@@ -8,14 +9,16 @@ if (!$conn) {
   echo 'Connection error: ' . mysqli_connect_error();
 }
 
-//View 1
-$RI = 'SELECT Routes.RouteID, Routes.Duration, Routes.Distance, Trains.TrainID, s1.Location AS StartStation, s2.Location AS EndStation FROM Routes JOIN Trains ON Routes.OperatingTrains = Trains.TrainID JOIN Stations s1 ON Routes.StartStation = s1.StationID JOIN Stations s2 ON Routes.EndStation = s2.StationID';
-$RI2 = mysqli_query($conn, $RI);
-$RouteInfo = mysqli_fetch_all($RI2, MYSQLI_ASSOC);
+//Views
+{
+  //View 1
+  $RI = 'SELECT Routes.RouteID, Routes.Duration, Routes.Distance, Trains.TrainID, s1.Location AS StartStation, s2.Location AS EndStation FROM Routes JOIN Trains ON Routes.OperatingTrains = Trains.TrainID JOIN Stations s1 ON Routes.StartStation = s1.StationID JOIN Stations s2 ON Routes.EndStation = s2.StationID';
+  $RI2 = mysqli_query($conn, $RI);
+  $RouteInfo = mysqli_fetch_all($RI2, MYSQLI_ASSOC);
 
 
-//View 2
-$PassTrains = 'SELECT T.TrainID, MAX(R.Weight) AS MaximumWeight, SUM(R.PassengerCapacity) AS TotalPassengerCount, RT.RouteID, S1.Location AS StartStation, S2.Location AS EndStation 
+  //View 2
+  $PassTrains = 'SELECT T.TrainID, MAX(R.Weight) AS MaximumWeight, SUM(R.PassengerCapacity) AS TotalPassengerCount, RT.RouteID, S1.Location AS StartStation, S2.Location AS EndStation 
                 FROM Trains T 
                 JOIN RailCars R ON T.BodyRailCarType = R.ModelNumber 
                 JOIN Routes RT ON T.TrainID = RT.OperatingTrains 
@@ -24,55 +27,55 @@ $PassTrains = 'SELECT T.TrainID, MAX(R.Weight) AS MaximumWeight, SUM(R.Passenger
                 WHERE R.Category = "Passenger" 
                 GROUP BY T.TrainID, RT.RouteID, S1.Location, S2.Location';
 
-$PasseTrain = mysqli_query($conn, $PassTrains);
-$PassengerTrains = mysqli_fetch_all($PasseTrain, MYSQLI_ASSOC);
+  $PasseTrain = mysqli_query($conn, $PassTrains);
+  $PassengerTrains = mysqli_fetch_all($PasseTrain, MYSQLI_ASSOC);
 
-//View 3
-$RTC = 'SELECT r.RouteID, (SELECT COUNT(*) FROM Trains T JOIN Routes rt ON rt.OperatingTrains = t.TrainID WHERE rt.RouteID = r.RouteID) AS NumberOfTrains FROM Routes r';
-$RTC2 = mysqli_query($conn, $RTC);
-$RouteTrainCount = mysqli_fetch_all($RTC2, MYSQLI_ASSOC);
+  //View 3
+  $RTC = 'SELECT r.RouteID, (SELECT COUNT(*) FROM Trains T JOIN Routes rt ON rt.OperatingTrains = t.TrainID WHERE rt.RouteID = r.RouteID) AS NumberOfTrains FROM Routes r';
+  $RTC2 = mysqli_query($conn, $RTC);
+  $RouteTrainCount = mysqli_fetch_all($RTC2, MYSQLI_ASSOC);
 
-//View 4
-$RCI = 'SELECT RailCars.ModelNumber, RailCars.ModelName FROM RailCars LEFT JOIN Trains ON RailCars.ModelNumber = Trains.EngineRailCarType UNION SELECT RailCars.ModelNumber, RailCars.ModelName FROM RailCars RIGHT JOIN Trains ON RailCars.ModelNumber = Trains.EngineRailCarType';
-$RCI2 = mysqli_query($conn, $RCI);
-$RailCarInfo = mysqli_fetch_all($RCI2, MYSQLI_ASSOC);
+  //View 4
+  $RCI = 'SELECT RailCars.ModelNumber, RailCars.ModelName FROM RailCars LEFT JOIN Trains ON RailCars.ModelNumber = Trains.EngineRailCarType UNION SELECT RailCars.ModelNumber, RailCars.ModelName FROM RailCars RIGHT JOIN Trains ON RailCars.ModelNumber = Trains.EngineRailCarType';
+  $RCI2 = mysqli_query($conn, $RCI);
+  $RailCarInfo = mysqli_fetch_all($RCI2, MYSQLI_ASSOC);
 
-//View 5
-$RS = 'SELECT * FROM (SELECT "Weekday" AS DayCategory, r.RouteID, r.StartStation, r.EndStation, rt.StartTime, rt.EndTime, rt.DayOfWeek FROM Routes r INNER JOIN RunningTimes rt ON r.RouteID = rt.RouteID WHERE rt.DayOfWeek IN ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday") UNION SELECT "Weekend" AS DayCategory, r.RouteID, r.StartStation, r.EndStation, rt.StartTime, rt.EndTime, rt.DayOfWeek FROM Routes r INNER JOIN RunningTimes rt ON r.RouteID = rt.RouteID Where rt.DayOfWeek IN ("Saturday", "Sunday")) AS CombinedData';
-$RS2 = mysqli_query($conn, $RS);
-$RailCarInfo = mysqli_fetch_all($RS2, MYSQLI_ASSOC);
+  //View 5
+  $RS = 'SELECT * FROM (SELECT "Weekday" AS DayCategory, r.RouteID, r.StartStation, r.EndStation, rt.StartTime, rt.EndTime, rt.DayOfWeek FROM Routes r INNER JOIN RunningTimes rt ON r.RouteID = rt.RouteID WHERE rt.DayOfWeek IN ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday") UNION SELECT "Weekend" AS DayCategory, r.RouteID, r.StartStation, r.EndStation, rt.StartTime, rt.EndTime, rt.DayOfWeek FROM Routes r INNER JOIN RunningTimes rt ON r.RouteID = rt.RouteID Where rt.DayOfWeek IN ("Saturday", "Sunday")) AS CombinedData';
+  $RS2 = mysqli_query($conn, $RS);
+  $RailCarInfo = mysqli_fetch_all($RS2, MYSQLI_ASSOC);
 
-//View 6
-$Long = 'SELECT RouteID, Distance
+  //View 6
+  $Long = 'SELECT RouteID, Distance
         FROM Routes
         ORDER BY Distance DESC';
-$LongR = mysqli_query($conn, $Long);
-$LongestRoutes = mysqli_fetch_all($LongR, MYSQLI_ASSOC);
+  $LongR = mysqli_query($conn, $Long);
+  $LongestRoutes = mysqli_fetch_all($LongR, MYSQLI_ASSOC);
 
 
-//View 7
-$Dest = 'SELECT DISTINCT U.Username, U.Location AS CurrentLocation, S.Location AS PossibleDestination FROM User U JOIN Routes R ON U.Location = (SELECT S.Location FROM Stations S WHERE S.StationID = R.StartStation) JOIN Stations S ON R.EndStation = S.StationID';
-$DestRoute = mysqli_query($conn, $Dest);
-$PossibleDestination = mysqli_fetch_all($DestRoute, MYSQLI_ASSOC);
+  //View 7
+  $Dest = 'SELECT DISTINCT U.Username, U.Location AS CurrentLocation, S.Location AS PossibleDestination FROM User U JOIN Routes R ON U.Location = (SELECT S.Location FROM Stations S WHERE S.StationID = R.StartStation) JOIN Stations S ON R.EndStation = S.StationID';
+  $DestRoute = mysqli_query($conn, $Dest);
+  $PossibleDestination = mysqli_fetch_all($DestRoute, MYSQLI_ASSOC);
 
-//View 8
-$TRange = 'SELECT Routes.RouteID, RunningTimes.StartTime, Routes.StartStation FROM Routes JOIN RunningTimes ON Routes.RouteID = RunningTimes.RouteID WHERE RunningTimes.StartTime BETWEEN "09:00:00" AND "13:00:00"';
-$TimeRange = mysqli_query($conn, $TRange);
-$RouteStartBetweenTimeRange = mysqli_fetch_all($TimeRange, MYSQLI_ASSOC);
+  //View 8
+  $TRange = 'SELECT Routes.RouteID, RunningTimes.StartTime, Routes.StartStation FROM Routes JOIN RunningTimes ON Routes.RouteID = RunningTimes.RouteID WHERE RunningTimes.StartTime BETWEEN "09:00:00" AND "13:00:00"';
+  $TimeRange = mysqli_query($conn, $TRange);
+  $RouteStartBetweenTimeRange = mysqli_fetch_all($TimeRange, MYSQLI_ASSOC);
 
-//View 9
-$WeekdayRoute = 'SELECT * 
+  //View 9
+  $WeekdayRoute = 'SELECT * 
                 FROM RunningTimes 
                 WHERE NOT (Dayofweek = "Sunday" OR Dayofweek = "Saturday")';
-$WdayRoute = mysqli_query($conn, $WeekdayRoute);
-$WeekdayRoutes = mysqli_fetch_all($WdayRoute, MYSQLI_ASSOC);
+  $WdayRoute = mysqli_query($conn, $WeekdayRoute);
+  $WeekdayRoutes = mysqli_fetch_all($WdayRoute, MYSQLI_ASSOC);
 
-//View 10
-$Tprices = 'SELECT AgeType, Cost 
+  //View 10
+  $Tprices = 'SELECT AgeType, Cost 
             FROM Ticket';
-$Ticprices = mysqli_query($conn, $Tprices);
-$TicketPrices = mysqli_fetch_all($Ticprices, MYSQLI_ASSOC);
-
+  $Ticprices = mysqli_query($conn, $Tprices);
+  $TicketPrices = mysqli_fetch_all($Ticprices, MYSQLI_ASSOC);
+}
 
 // ACCOUNT SIGNUP STUFF
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -184,6 +187,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
       $insertQuery = "INSERT INTO UserTickets (Username, RouteID, TicketType) VALUES ('$username', '$routeID', '$ticketType')";
       if (mysqli_query($conn, $insertQuery)) {
         header("Location: {$_SERVER['REQUEST_URI']}");
+        echo "<script>alert('Ticket Purchased');</script>";
         exit();
       } else {
         echo "<script>alert('Error purchasing ticket.');</script>";
@@ -193,8 +197,6 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     }
   }
 }
-// Close connection
-mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>
@@ -235,8 +237,6 @@ mysqli_close($conn);
   </nav>
 
 
-
-  <!-- Main Content -->
   <div id="main-content">
     <!-- Tabs List -->
     <ul class="nav nav-tabs flex-column" id="myTabs">
@@ -248,7 +248,7 @@ mysqli_close($conn);
       }
       ?>
       <li class="tab-item">
-        <a class="nav-link" id="buy-tickets-tab" data-toggle="tab" href="#buy-tickets">Buy Tickets</a>
+        <a class="nav-link active" id="buy-tickets-tab" data-toggle="tab" href="#buy-tickets">Buy Tickets</a>
       </li>
       <li class="tab-item">
         <a class="nav-link" id="routes-schedules-tab" data-toggle="tab" href="#routes-schedules">Routes & Schedules</a>
@@ -295,7 +295,7 @@ mysqli_close($conn);
         echo '</div>';
       }
       ?>
-
+      <!-- Buy Tickets Tab -->
       <div class="tab-pane fade show active" id="buy-tickets">
         <h2>Buy Tickets</h2>
         <table>
@@ -328,8 +328,6 @@ mysqli_close($conn);
         }
         ?>
         
-
-
         <?php
 
         if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
@@ -381,15 +379,15 @@ mysqli_close($conn);
 
         } else {
           // Show the login/signup link if not logged in
-        
         }
         ?>
       </div>
 
+      
+      <!-- Routes and Schedules Tab -->
       <div class="tab-pane fade" id="routes-schedules">
         <h2>Routes & Schedules</h2>
-
-        <table style="border: 1px solid black;" class="route-info-table">
+        <table class="route-info-table">
           <thead>
             <tr>
               <th>Route No.</th>
@@ -440,6 +438,37 @@ mysqli_close($conn);
       </div>
       <div class="tab-pane fade" id="edu-info">
         <h2>Educational Information Content</h2>
+        <div id="trainData"></div>
+          <script>
+            // Function to fetch data from the backend (JSON response)
+            function fetchData() {
+              fetch('json-response.php') // Replace with the actual path to your JSON endpoint
+                .then(response => response.json())
+                .then(data => {
+                  // Assuming 'data' is an array of objects received from the JSON response
+                  const trainDataContainer = document.getElementById('trainData');
+                  // Clear any existing content
+                  trainDataContainer.innerHTML = '';
+                  
+                  // Iterate through the received data and display it
+                  data.forEach(train => {
+                    const trainInfo = document.createElement('div');
+                    trainInfo.innerHTML = `
+                      <h2>${train.title}</h2>
+                      <p>${train.extract}</p>
+                      <hr>
+                    `;
+                    trainDataContainer.appendChild(trainInfo);
+                  });
+                })
+                .catch(error => {
+                  console.error('Error fetching data:', error);
+                });
+            }
+
+            // Call the function to fetch and display data when the page loads
+            fetchData();
+          </script>
       </div>
     </div>
   </div>

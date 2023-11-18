@@ -1,13 +1,12 @@
 - All Views Content 
-- A web page that uses an external REST/JSON API (e.g. Twitter)
-	- At least two queries associated with the functionality (e.g. saving Tweets in the database)
-- At least one Web service that generates an XML document or JSON
-- At least one Web service (SOAP/REST) that interacts with a database
-- Detailed ReadME document on how to install/setup project. ( I think this is the report stuff)
-- About Us Page
-- Fix ALL OF KEVAUNS CSS (When you are logged in and logged out the buy tickets tab shifts for SOME REASON IDKkKKKK)
-- Fix when the website has to scroll down smn weird happens (you can see it when a user has a bunch of tickets in the my ticket tabs)
 
+- All required XML/SOAP stuff. (-fahad)
+- Detailed ReadME document on how to install/setup project. ( I think this is the report stuff)
+
+
+- Error alerts if details for ticket not entered.
+- Way to cancel/delete tickets.
+- About Us Page
 
 
 Currently Targetted Tasks

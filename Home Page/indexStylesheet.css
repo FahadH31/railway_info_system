@@ -1,10 +1,11 @@
+/* Default styles for all screen sizes */
 body {
   background-color: #FFFFFF;
   font-size: 14pt;
 }
 
-/*Navbar Formatting*/
-#logo{
+/* Navbar Formatting */
+#logo {
   width: 50px;
   height: 45px;
 }
@@ -26,25 +27,24 @@ body {
   margin-left: auto;
 }
 
-.login-signup-btn{
+.login-signup-btn {
   border-radius: 20px;
   font-size: 14pt;
   transition: 0.4s;
   font-weight: 500;
 }
 
-.btn-primary:hover{
+.btn-primary:hover {
   transition: 0.4s;
 }
 
-.btn-outline-success{
+.btn-outline-success {
   margin-top: 1vh;
 }
 
+/* Tab Formatting */
 
-/*Tab Formatting*/
-
-/* Active Tab*/
+/* Active Tab */
 .nav-tabs .nav-link.active {
   background-color: black;
   color: white; 
@@ -63,8 +63,8 @@ body {
   transition: 0.4s;
 }
 
-/*Tab List*/
-#myTabs{
+/* Tab List */
+#myTabs {
   float: left;
   border-radius: 15px;
   font-weight: 500;
@@ -72,16 +72,16 @@ body {
   margin-top: 2vh;
 }
 
-.tab-pane{
+.tab-pane {
   padding-top: 2vh;
   padding-left: 16vw;
 }
 
-td{
+td {
   padding: 10px;
 }
 
-th{
+th {
   background-color: #362f4b;
   color: white;
   padding: 10px;
@@ -95,30 +95,18 @@ tr:nth-child(even) {
   background-color: #f6f6f6;
 }
 
-.hflex {
-  display: flex;
-  flex: 1;
+/* Media Query for smaller screens */
+@media screen and (max-width: 1200px) {
+  /* Adjustments for smaller screens */
+  .tab-pane {
+    padding-left: 25vw;
+  }
 }
 
-
-.horizontal-table {
-  border-collapse: collapse;
-  margin-left: 50px;
-}
-
-.horizontal-table th,
-.horizontal-table td {
-  border: 1px solid #000;
-  padding: 8px;
-}
-
-/* Display table rows horizontally */
-.horizontal-table tbody tr {
-  display: flex;
-}
-
-/* Ensure table headers align with respective data */
-.horizontal-table thead th {
-  flex: 1;
-  text-align: center;
+/* Media Query for smaller screens */
+@media screen and (max-width: 1700px) {
+  /* Adjustments for smaller screens */
+  .tab-pane {
+    padding-left: 20vw;
+  }
 }
