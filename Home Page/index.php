@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = $result->fetch_assoc();
         if ($row['count'] > 0) {
           echo "<script>alert('Username already exists. Please choose a different username.');</script>";
-          echo "<script>window.location.href = '..\Account Pages\signup.html';</script>";
+          echo "<script>window.location.href = '../Account Pages/signup.html';</script>";
           exit();
 
         } else {
@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
           if ($conn->query($sql) === TRUE) {
             echo "<script>alert('Account Successfully Created. Please login');</script>";
-            echo "<script>window.location.href = '..\Account Pages\login.html';</script>";
+            echo "<script>window.location.href = '../Account Pages/login.html';</script>";
             exit();
           } else {
             echo "<script>alert('Error with Username or Unfilled Cells.');</script>";
@@ -138,11 +138,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>window.location.href = 'index.php';</script>";
       } else {
         echo "<script>alert('Credentials do not match');</script>";
-        echo "<script>window.location.href = '..\Account Pages\login.html';</script>";
+        echo "<script>window.location.href = '../Account Pages/login.html';</script>";
       }
     } else {
       echo "<script>alert('Username does not exist');</script>";
-      echo "<script>window.location.href = '..\Account Pages\login.html';</script>";
+      echo "<script>window.location.href = '../Account Pages/login.html';</script>";
     }
     exit();
   }
@@ -167,8 +167,8 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
 
 // PURCHASE TICKET STUFF
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-  if (isset($_POST['purchase'], $_POST['Route'])) {
-    $ticketType = $_POST['purchase'];
+  if (isset($_POST['Type'], $_POST['Route'])) {
+    $ticketType = $_POST['Type'];
     $routeID = $_POST['Route'];
     $username = $_SESSION['username'];
 
