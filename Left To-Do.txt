@@ -1,4 +1,3 @@
-- Organize File Structure.
 - All Views Content 
 - A web page that uses an external REST/JSON API (e.g. Twitter)
 	- At least two queries associated with the functionality (e.g. saving Tweets in the database)

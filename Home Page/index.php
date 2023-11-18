@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = $result->fetch_assoc();
         if ($row['count'] > 0) {
           echo "<script>alert('Username already exists. Please choose a different username.');</script>";
-          echo "<script>window.location.href = 'signup.html';</script>";
+          echo "<script>window.location.href = '..\Account Pages\signup.html';</script>";
           exit();
 
         } else {
@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
           if ($conn->query($sql) === TRUE) {
             echo "<script>alert('Account Successfully Created. Please login');</script>";
-            echo "<script>window.location.href = 'login.html';</script>";
+            echo "<script>window.location.href = '..\Account Pages\login.html';</script>";
             exit();
           } else {
             echo "<script>alert('Error with Username or Unfilled Cells.');</script>";
@@ -138,11 +138,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>window.location.href = 'index.php';</script>";
       } else {
         echo "<script>alert('Credentials do not match');</script>";
-        echo "<script>window.location.href = 'login.html';</script>";
+        echo "<script>window.location.href = '..\Account Pages\login.html';</script>";
       }
     } else {
       echo "<script>alert('Username does not exist');</script>";
-      echo "<script>window.location.href = 'login.html';</script>";
+      echo "<script>window.location.href = '..\Account Pages\login.html';</script>";
     }
     exit();
   }
@@ -211,7 +211,7 @@ mysqli_close($conn);
 <body>
   <!-- Navigation Bar -->
   <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand"><img id="logo" src="train-icon.png"></a>
+    <a class="navbar-brand"><img id="logo" src="..\Images\train-icon.png"></a>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" href="index.php">Home</a>
@@ -228,7 +228,7 @@ mysqli_close($conn);
       echo '<form action="logout.php" method="post"><button type="submit" class="btn btn-primary login-signup-btn nav-link">Logout</button></form>';
     } else {
       // Show the login/signup link if not logged in
-      echo '<a id="login-link" class="nav-link btn btn-primary login-signup-btn" href="signup.html">Login/Signup</a>';
+      echo '<a id="login-link" class="nav-link btn btn-primary login-signup-btn" href="..\Account Pages\signup.html">Login/Signup</a>';
     }
     ?>
     </button>
@@ -323,8 +323,8 @@ mysqli_close($conn);
           //Do nothing
         } else {
           // Show the prompt to login/signup link if not logged in
-          echo '<p id="login-signup-msg">To purchase tickets, <a href="signup.html">Create an Account</a> or <a
-          href="login.html">Log in.</a></p>';
+          echo '<p id="login-signup-msg">To purchase tickets, <a href="..\Account Pages\signup.html">Create an Account</a> or <a
+          href="..\Account Pages\login.html">Log in.</a></p>';
         }
         ?>
         
