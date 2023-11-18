@@ -1,8 +1,6 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,11 +8,12 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link href="accountStylesheet.css" rel="stylesheet">
 </head>
+
 <body>
-  
+
   <!-- Navigation Bar -->
   <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href=""><img id = "logo" src="train-icon.png"></a>
+    <a class="navbar-brand" href=""><img id="logo" src="train-icon.png"></a>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" href="index.php">Home</a>
@@ -24,7 +23,7 @@
       </li>
     </ul>
   </nav>
-  
+
   <!--Sign-Up Form Container-->
   <div class="container">
     <form action="index.php" class="sign-up-form" method="post">
@@ -33,25 +32,28 @@
         <input type="text" class="form-control" id="username" placeholder="Username" name="username" required>
       </div>
       <div class="form-group">
-        <input type="password" class="form-control" id="userPassword" placeholder="Password" name="userPassword" required>
+        <input type="password" class="form-control" id="userPassword" placeholder="Password" name="userPassword"
+          required>
       </div>
       <div class="form-group">
-      <label for="location-select">Select a location:</label>
-  <select id="location-select" name="location" required>
-    <option value="New York">New York</option>
-    <option value="Chicago">Chicago</option>
-    <option value="Los Angeles">Los Angeles</option>
-    <option value="Seattle">Seattle</option>
-    <option value="Dallas">Dallas</option>
-    <option value="Miami">Miami</option>
-
-  </select>
-</div>
-      <input type="submit" class="btn btn-dark btn-block" value="Signup"><br>
-      <p>Already have an account? <a href = "login.html">Login</a>.</p>
+        <label for="location-select">Select your location:</label>
+        <select class="form-select" id="location-select" name="location" required>
+          <option value="" disabled selected>Select a location</option>
+          <option value="New York">New York</option>
+          <option value="Chicago">Chicago</option>
+          <option value="Los Angeles">Los Angeles</option>
+          <option value="Seattle">Seattle</option>
+          <option value="Dallas">Dallas</option>
+          <option value="Miami">Miami</option>
+        </select>
+      </div>
+      
+      <input type="submit" class="btn btn-dark btn-block" value="Sign Up"><br>
+      <p>Already have an account? <a href="login.html">Login</a>.</p>
     </form>
   </div>
 
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

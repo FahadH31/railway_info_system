@@ -14,6 +14,7 @@ body {
   
   .navbar {
     background-color: #F77A36;
+    font-weight: 500;
   }
 
   .navbar-dark .navbar-nav .nav-link {
@@ -47,4 +48,5 @@ body {
     opacity: 50%;
     transition: 0.4s;
   }
+
   

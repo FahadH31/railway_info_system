@@ -7,7 +7,6 @@ body {
 #logo{
   width: 50px;
   height: 45px;
-  padding: 0px;
 }
 
 .navbar {
@@ -25,10 +24,9 @@ body {
 
 #login-link {
   margin-left: auto;
-  color: white;
 }
 
-.btn-primary{
+.login-signup-btn{
   border-radius: 20px;
   font-size: 14pt;
   transition: 0.4s;
@@ -37,6 +35,10 @@ body {
 
 .btn-primary:hover{
   transition: 0.4s;
+}
+
+.btn-outline-success{
+  margin-top: 1vh;
 }
 
 
@@ -63,21 +65,16 @@ body {
 
 /*Tab List*/
 #myTabs{
-  position: fixed;
+  float: left;
   border-radius: 15px;
   font-weight: 500;
+  margin-left: 1vw;
+  margin-top: 2vh;
 }
 
-#main-content {
-  display: flex;
-  justify-content: left;
-  padding: 20px;
-}
-
-.tab-content {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+.tab-pane{
+  padding-top: 2vh;
+  padding-left: 16vw;
 }
 
 td{
@@ -90,12 +87,12 @@ th{
   padding: 10px;
 }
 
-tr:nth-child(even) {
-  background-color: #f6f6f6;
+table {
+  margin-top: 15px;
 }
 
-table{
-  margin: 30px;
+tr:nth-child(even) {
+  background-color: #f6f6f6;
 }
 
 .hflex {
@@ -103,11 +100,6 @@ table{
   flex: 1;
 }
 
-.but-ticket-form input[type="radio"],
-.but-ticket-form label {
-  display: inline-block;
-  margin-right: 10px;
-}
 
 .horizontal-table {
   border-collapse: collapse;
