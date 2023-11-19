@@ -2,7 +2,7 @@
 
 session_start();
 // Connect to the database
-$conn = mysqli_connect('localhost:3306', 'root', 'fahad1306', 'RailwaySystemWebsite');
+$conn = mysqli_connect('localhost:3306', 'root', '123456', 'RailwaySystemWebsite');
 
 // Check connection
 if (!$conn) {
@@ -197,6 +197,37 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     }
   }
 }
+
+
+
+// DELETE TICKET STUFF
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
+  // Retrieve the RouteID and TicketType from the form
+  $routeID = $_POST['routeID'];
+  $ticketType = $_POST['ticketType'];
+  
+  // Get the logged-in user's username
+  $loggedInUsername = $_SESSION['username'];
+
+  // Query to remove one specified ticket for the logged-in user
+  $removeTicketQuery = "DELETE FROM UserTickets 
+                        WHERE Username = '$loggedInUsername' 
+                        AND RouteID = '$routeID' 
+                        AND TicketType = '$ticketType' 
+                        LIMIT 1"; // Limit the deletion to one row
+  
+  // Execute the query to remove the ticket
+  if (mysqli_query($conn, $removeTicketQuery)) {
+      // Redirect back to the page with refreshed ticket data
+      header("Location: {$_SERVER['HTTP_REFERER']}");
+      exit();
+  } else {
+      echo "<script>alert('Error removing ticket');</script>";
+  }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -277,17 +308,26 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
         echo '<th>RouteID</th>';
         echo '<th>TicketType</th>';
         echo '<th>TicketCount</th>';
+        echo "<th>Cancel</th>";
         echo '</tr>';
         echo '</thead>';
         echo '<tbody>';
 
         foreach ($userTickets as $ticket) {
           echo '<tr>';
+          echo '<form method="post" action="index.php">'; // Assuming remove_ticket.php is the script handling deletions
           echo '<td>' . $ticket["RouteID"] . '</td>';
           echo '<td>' . $ticket["TicketType"] . '</td>';
           echo '<td>' . $ticket["TicketCount"] . '</td>';
+          echo '<td>' . '<input type="hidden" name="routeID" value="' . $ticket["RouteID"] . '">' .
+               '<input type="hidden" name="ticketType" value="' . $ticket["TicketType"] . '">' .
+               '<button type="submit" name="removeTicket" class="btn btn-danger">Cancel</button>' . '</td>';
+          echo '</form>';
           echo '</tr>';
-        }
+      }
+      
+      echo '</tbody>';
+      echo '</table>';
 
         echo '</tbody>';
         echo '</table>';
@@ -339,13 +379,13 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
           <i>Select your route</i>:<br>
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
             <label class="btn btn-outline-success">
-              <input type="radio" name="Route" value="2001"> Route 2001
+              <input type="radio" name="Route" value="2001" > Route 2001
             </label>
             <label class="btn btn-outline-success">
               <input type="radio" name="Route" value="2002"> Route 2002
             </label>
             <label class="btn btn-outline-success">
-              <input type="radio" name="Route" value="2003"> Route 2003
+              <input type="radio" name="Route" value="2003" required> Route 2003
             </label>
             <label class="btn btn-outline-success">
               <input type="radio" name="Route" value="2004"> Route 2004
@@ -361,10 +401,10 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
           <i>Select ticket type</i>:<br>
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
             <label class="btn btn-outline-success">
-              <input type="radio" name="Type" value="Adult"> Adult
+              <input type="radio" name="Type" value="Adult" > Adult
             </label>
             <label class="btn btn-outline-success">
-              <input type="radio" name="Type" value="Child"> Child
+              <input type="radio" name="Type" value="Child" required> Child
             </label>
             <label class="btn btn-outline-success">
               <input type="radio" name="Type" value="Senior"> Senior

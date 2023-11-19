@@ -4,7 +4,6 @@
 - Detailed ReadME document on how to install/setup project. ( I think this is the report stuff)
 
 
-- Error alerts if details for ticket not entered.
 - Way to cancel/delete tickets.
 - About Us Page
 
