@@ -4,7 +4,8 @@
 - Detailed ReadME document on how to install/setup project. ( I think this is the report stuff)
 
 
-- Way to cancel/delete tickets.
+- Alerts for buying/removing tickets.
+- Redirect to MyTickets Page when a ticket is cancelled
 - About Us Page
 
 

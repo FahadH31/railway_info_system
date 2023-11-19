@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="railwayInfo">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="history" type="historyType"/>
+                <xs:element name="interestingFacts" type="interestingFactsType"/>
+                <xs:element name="trainModels" type="trainModelsType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="historyType">
+        <xs:sequence>
+            <xs:element name="event" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="date" type="xs:string"/>
+                        <xs:element name="description" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="interestingFactsType">
+        <xs:sequence>
+            <xs:element name="fact" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="title" type="xs:string"/>
+                        <xs:element name="description" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="trainModelsType">
+        <xs:sequence>
+            <xs:element name="model" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string"/>
+                        <xs:element name="description" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

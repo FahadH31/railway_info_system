@@ -2,7 +2,7 @@
 
 session_start();
 // Connect to the database
-$conn = mysqli_connect('localhost:3306', 'root', '123456', 'RailwaySystemWebsite');
+$conn = mysqli_connect('localhost:3306', 'root', 'fahad1306', 'RailwaySystemWebsite');
 
 // Check connection
 if (!$conn) {
@@ -186,8 +186,8 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
       // Insert ticket details into UserTickets table
       $insertQuery = "INSERT INTO UserTickets (Username, RouteID, TicketType) VALUES ('$username', '$routeID', '$ticketType')";
       if (mysqli_query($conn, $insertQuery)) {
-        header("Location: {$_SERVER['REQUEST_URI']}");
         echo "<script>alert('Ticket Purchased');</script>";
+        echo "<script>window.location.href = 'index.php';</script>";
         exit();
       } else {
         echo "<script>alert('Error purchasing ticket.');</script>";
@@ -199,15 +199,12 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
 }
 
 
-
 // DELETE TICKET STUFF
-
-
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
   // Retrieve the RouteID and TicketType from the form
   $routeID = $_POST['routeID'];
   $ticketType = $_POST['ticketType'];
-  
+
   // Get the logged-in user's username
   $loggedInUsername = $_SESSION['username'];
 
@@ -217,14 +214,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
                         AND RouteID = '$routeID' 
                         AND TicketType = '$ticketType' 
                         LIMIT 1"; // Limit the deletion to one row
-  
+
   // Execute the query to remove the ticket
   if (mysqli_query($conn, $removeTicketQuery)) {
-      // Redirect back to the page with refreshed ticket data
-      header("Location: {$_SERVER['HTTP_REFERER']}");
-      exit();
+    // Redirect back to the page with refreshed ticket data
+    echo "<script>alert('Ticket Cancelled');</script>";
+    echo "<script>window.location.href = 'index.php';</script>";
+    exit();
   } else {
-      echo "<script>alert('Error removing ticket');</script>";
+    echo "<script>alert('Error removing ticket');</script>";
   }
 }
 
@@ -305,9 +303,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
         echo '<table>';
         echo '<thead>';
         echo '<tr>';
-        echo '<th>RouteID</th>';
-        echo '<th>TicketType</th>';
-        echo '<th>TicketCount</th>';
+        echo '<th>Route No.</th>';
+        echo '<th>Type</th>';
+        echo '<th>Count</th>';
         echo "<th>Cancel</th>";
         echo '</tr>';
         echo '</thead>';
@@ -320,14 +318,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
           echo '<td>' . $ticket["TicketType"] . '</td>';
           echo '<td>' . $ticket["TicketCount"] . '</td>';
           echo '<td>' . '<input type="hidden" name="routeID" value="' . $ticket["RouteID"] . '">' .
-               '<input type="hidden" name="ticketType" value="' . $ticket["TicketType"] . '">' .
-               '<button type="submit" name="removeTicket" class="btn btn-danger">Cancel</button>' . '</td>';
+            '<input type="hidden" name="ticketType" value="' . $ticket["TicketType"] . '">' .
+            '<button type="submit" name="removeTicket" class="btn btn-danger">Cancel</button>' . '</td>';
           echo '</form>';
           echo '</tr>';
-      }
-      
-      echo '</tbody>';
-      echo '</table>';
+        }
+
+        echo '</tbody>';
+        echo '</table>';
 
         echo '</tbody>';
         echo '</table>';
@@ -335,6 +333,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
         echo '</div>';
       }
       ?>
+
       <!-- Buy Tickets Tab -->
       <div class="tab-pane fade show active" id="buy-tickets">
         <h2>Buy Tickets</h2>
@@ -367,14 +366,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
           href="..\Account Pages\login.html">Log in.</a></p>';
         }
         ?>
-        
+
         <?php
 
         if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
           // Show logout button if logged in
         
           echo
-          '
+            '
           <form class="route-selection-form" method="post">
           <i>Select your route</i>:<br>
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -423,7 +422,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
         ?>
       </div>
 
-      
+
       <!-- Routes and Schedules Tab -->
       <div class="tab-pane fade" id="routes-schedules">
         <h2>Routes & Schedules</h2>
@@ -477,39 +476,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
         </div>
       </div>
       <div class="tab-pane fade" id="edu-info">
-        <h2>Educational Information Content</h2>
-        <div id="trainData"></div>
-          <script>
-            // Function to fetch data from the backend (JSON response)
-            function fetchData() {
-              fetch('json-response.php') // Replace with the actual path to your JSON endpoint
-                .then(response => response.json())
-                .then(data => {
-                  // Assuming 'data' is an array of objects received from the JSON response
-                  const trainDataContainer = document.getElementById('trainData');
-                  // Clear any existing content
-                  trainDataContainer.innerHTML = '';
-                  
-                  // Iterate through the received data and display it
-                  data.forEach(train => {
-                    const trainInfo = document.createElement('div');
-                    trainInfo.innerHTML = `
-                      <h2>${train.title}</h2>
-                      <p>${train.extract}</p>
-                      <hr>
-                    `;
-                    trainDataContainer.appendChild(trainInfo);
-                  });
-                })
-                .catch(error => {
-                  console.error('Error fetching data:', error);
-                });
-            }
-
-            // Call the function to fetch and display data when the page loads
-            fetchData();
-          </script>
-      </div>
+        <div id="railwayInfo">
+          <?php
+            // Include the PHP file that generates the XML content
+            include 'display-railway-info.php';
+          ?>
+        </div>
     </div>
   </div>
 
@@ -517,6 +489,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="XMLscript.js"></script>
 </body>
 
 

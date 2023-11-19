@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<railwayInfo>
+    <history>
+        <event>
+            <date>1804</date>
+            <description>First steam-powered locomotive invented by Richard Trevithick.</description>
+        </event>
+        <event>
+            <date>1825</date>
+            <description>Opening of the Stockton and Darlington Railway, the first public railway to carry both passengers and freight.</description>
+        </event>
+        <!-- Add more historical events -->
+    </history>
+    <interestingFacts>
+        <fact>
+            <title>Longest Railway</title>
+            <description>The Trans-Siberian Railway is the world's longest railway, spanning approximately 9,289 kilometers.</description>
+        </fact>
+        <fact>
+            <title>High-Speed Train</title>
+            <description>The Shinkansen in Japan is one of the fastest trains in the world, reaching speeds of up to 320 km/h.</description>
+        </fact>
+        <!-- Add more interesting facts -->
+    </interestingFacts>
+    <trainModels>
+        <model>
+            <name>ICE 4</name>
+            <description>The Intercity-Express 4 is a high-speed train operated in Germany and other European countries.</description>
+        </model>
+        <model>
+            <name>Maglev</name>
+            <description>Magnetic levitation trains use magnetic fields for propulsion, achieving high speeds with minimal friction.</description>
+        </model>
+        <!-- Add more train models -->
+    </trainModels>
+</railwayInfo>
