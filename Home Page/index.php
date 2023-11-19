@@ -2,7 +2,7 @@
 
 session_start();
 // Connect to the database
-$conn = mysqli_connect('localhost:3306', 'root', 'fahad1306', 'RailwaySystemWebsite');
+$conn = mysqli_connect('localhost:3306', 'root', '123456', 'RailwaySystemWebsite');
 
 // Check connection
 if (!$conn) {
@@ -481,6 +481,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
             // Include the PHP file that generates the XML content
             include 'display-railway-info.php';
           ?>
+        </div>
+
+<!-- This is the uhhhh SOAP / RestJson stuff -->
+
+<h4>Our Railcars</h4>
+<div id="educational-content">
+
+
+</div>
+
+<script>
+ fetch('http://localhost/RailwaySystemWebsite/Home%20Page/displayedu.php')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    let html = '<ul>';
+
+    if (Array.isArray(data)) {
+      data.forEach(info => {
+        html += `<h6>${info.Header}</h6><p>${info.information}</p></li>`;
+      });
+      html += '</ul>';
+
+      // Display fetched data in the designated div
+      document.getElementById('educational-content').innerHTML = html;
+    } else {
+      console.error('Received data is not an array:', data);
+    }
+  })
+  
+  .catch(error => {
+    console.error('Error:', error);
+    alert('Error fetching data');
+  });
+</script>
+
         </div>
     </div>
   </div>
