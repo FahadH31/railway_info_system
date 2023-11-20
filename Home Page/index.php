@@ -643,6 +643,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
       <!-- Educational Information Tab -->
       <div class="tab-pane fade" id="edu-info">
       <h2>Educational Information</h2>
+      
         <div id="railwayInfo">
           <?php
           // Include the PHP file that generates the XML content
@@ -664,7 +665,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
 
             if (Array.isArray(data)) {
               data.forEach(info => {
-                html += `<p><b>${info.Header}</b><br>${info.information}</p><br>`;
+                html += `<p><b>${info.Header}</b><br>${info.information}</p><img style="height: 20vw; width=50vw;" src="${info.images}"><br><br>`;
               });
               html += '</p>';
 

@@ -126,6 +126,11 @@ tr:nth-child(even) {
   height: auto;
 }
 
+.imgsize{
+  height: 20vh;
+  width: 50vw;
+}
+
 
 /* Media Query for smaller screens */
 @media screen and (max-width: 1200px) {
