@@ -4,6 +4,15 @@ body {
   font-size: 14pt;
 }
 
+h2{
+  background-color: #2aae47 ;
+  color: #FFFFFF;
+  padding: 10px;
+  border-radius: 15px;
+  margin-right: 50px;
+  margin-bottom: 20px;
+}
+
 /* Navbar Formatting */
 #logo {
   width: 50px;
@@ -16,7 +25,7 @@ body {
 }
 
 .navbar-dark .navbar-nav .nav-link {
-  color: #ffffff;
+  color: black;
 }
 
 .navbar-dark .navbar-toggler-icon {
@@ -27,11 +36,12 @@ body {
   margin-left: auto;
 }
 
-.login-signup-btn {
+.login-signup-btn{
   border-radius: 20px;
   font-size: 14pt;
   transition: 0.4s;
   font-weight: 500;
+  background-color: black;
 }
 
 .btn-primary:hover {
@@ -77,6 +87,10 @@ body {
   padding-left: 16vw;
 }
 
+table{
+  border: 3px solid black;
+}
+
 td {
   padding: 10px;
 }
@@ -95,6 +109,19 @@ tr:nth-child(even) {
   background-color: #f6f6f6;
 }
 
+#educational-content, .info-section{
+  padding: 10px;
+  padding-top: 20px;
+  margin-right: 10vw;
+  background-color: #f1e6d3;
+  border-radius: 5px;
+}
+
+.light-yellow{
+  background-color: #fdf6c4;
+}
+
+
 /* Media Query for smaller screens */
 @media screen and (max-width: 1200px) {
   /* Adjustments for smaller screens */
@@ -110,3 +137,4 @@ tr:nth-child(even) {
     padding-left: 20vw;
   }
 }
+

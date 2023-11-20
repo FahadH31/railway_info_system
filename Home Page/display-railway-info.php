@@ -3,31 +3,31 @@ $xmlFile = "railwayInfo.xml";
 $xmlDoc = new DOMDocument();
 $xmlDoc->load($xmlFile);
 
-$display = "";
+$display = "<h4>Timeline of Notable Events</h4>";
 
 // Display History Events
 $historyEvents = $xmlDoc->getElementsByTagName("event");
-$display .= "<h4>History of Railways</h4><ul>";
+$display .= "<div class = info-section>";
 foreach ($historyEvents as $event) {
     $date = $event->getElementsByTagName("date")[0]->nodeValue;
     $description = $event->getElementsByTagName("description")[0]->nodeValue;
-    $display .= "<li><strong>$date</strong>: $description</li>";
+    $display .= "<p><strong>$date</strong>: $description <br></p>";
 }
-$display .= "</ul>";
+$display .= "</div>";
 
 // Display Interesting Facts
 $interestingFacts = $xmlDoc->getElementsByTagName("fact");
-$display .= "<h2>Interesting Facts about Railways</h2><ul>";
+$display .= "<br><h4>Fun Facts</h4><div class = 'info-section light-yellow'><ol>";
 foreach ($interestingFacts as $fact) {
     $title = $fact->getElementsByTagName("title")[0]->nodeValue;
     $description = $fact->getElementsByTagName("description")[0]->nodeValue;
-    $display .= "<li><strong>$title</strong>: $description</li>";
+    $display .= "<strong><li>$title</strong>: $description</li><br>";
 }
-$display .= "</ul>";
+$display .= "</ol></div>";
 
 // Display Train Models
 $trainModels = $xmlDoc->getElementsByTagName("model");
-$display .= "<h2>Popular Train Models</h2><ul>";
+$display .= "<br><h4>Noteworthy Train Models</h4><ul>";
 foreach ($trainModels as $model) {
     $name = $model->getElementsByTagName("name")[0]->nodeValue;
     $description = $model->getElementsByTagName("description")[0]->nodeValue;

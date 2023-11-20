@@ -2,7 +2,7 @@
 
 session_start();
 // Connect to the database
-$conn = mysqli_connect('localhost:3306', 'root', '123456', 'RailwaySystemWebsite');
+$conn = mysqli_connect('localhost:3306', 'root', 'fahad1306', 'RailwaySystemWebsite');
 
 // Check connection
 if (!$conn) {
@@ -43,7 +43,7 @@ if (!$conn) {
   //View 5
   $RS = 'SELECT * FROM (SELECT "Weekday" AS DayCategory, r.RouteID, r.StartStation, r.EndStation, rt.StartTime, rt.EndTime, rt.DayOfWeek FROM Routes r INNER JOIN RunningTimes rt ON r.RouteID = rt.RouteID WHERE rt.DayOfWeek IN ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday") UNION SELECT "Weekend" AS DayCategory, r.RouteID, r.StartStation, r.EndStation, rt.StartTime, rt.EndTime, rt.DayOfWeek FROM Routes r INNER JOIN RunningTimes rt ON r.RouteID = rt.RouteID Where rt.DayOfWeek IN ("Saturday", "Sunday")) AS CombinedData';
   $RS2 = mysqli_query($conn, $RS);
-  $RailCarInfo = mysqli_fetch_all($RS2, MYSQLI_ASSOC);
+  $RouteSchedule = mysqli_fetch_all($RS2, MYSQLI_ASSOC);
 
   //View 6
   $Long = 'SELECT RouteID, Distance
@@ -236,7 +236,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Railway System</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="indexStylesheet.css">
+  <link type="text/css" rel="stylesheet" rel="stylesheet" href="indexStylesheet.css">
 </head>
 
 <body>
@@ -248,7 +248,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
         <a class="nav-link" href="index.php">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">About Us</a>
+        <a class="nav-link" href="../About Page/about.html">About Us</a>
       </li>
     </ul>
     <?php
@@ -256,10 +256,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
     // Check if the user is logged in (based on the session variable)
     if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
       // Show logout button if logged in
-      echo '<form action="logout.php" method="post"><button type="submit" class="btn btn-primary login-signup-btn nav-link">Logout</button></form>';
+      echo '<form action="logout.php" method="post"><button type="submit" class="btn btn-dark login-signup-btn nav-link">Logout</button></form>';
     } else {
       // Show the login/signup link if not logged in
-      echo '<a id="login-link" class="nav-link btn btn-primary login-signup-btn" href="..\Account Pages\signup.html">Login/Signup</a>';
+      echo '<a id="login-link" class="nav-link btn btn-dark login-signup-btn" href="..\Account Pages\signup.html">Login/Signup</a>';
     }
     ?>
     </button>
@@ -353,10 +353,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
             </tr>
           <?php endforeach; ?>
         </table>
-
         <br>
         <?php
-
         // Check if the user is logged in (based on the session variable)
         if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
           //Do nothing
@@ -368,7 +366,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
         ?>
 
         <?php
-
         if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
           // Show logout button if logged in
         
@@ -426,7 +423,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
       <!-- Routes and Schedules Tab -->
       <div class="tab-pane fade" id="routes-schedules">
         <h2>Routes & Schedules</h2>
-        <table class="route-info-table">
+        <h4>Route Details</h4>
+        <table>
           <thead>
             <tr>
               <th>Route No.</th>
@@ -435,7 +433,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
               <th>Train No.</th>
               <th>From</th>
               <th>To</th>
-              <!-- Add more table headers if there are additional columns -->
             </tr>
           </thead>
           <tbody>
@@ -459,77 +456,260 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
                 <td>
                   <?php echo $RI['EndStation']; ?>
                 </td>
-                <!-- Display additional columns accordingly -->
               </tr>
             <?php endforeach; ?>
           </tbody>
         </table>
+        <br>
+        <h4>Longest Routes </h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Route No.</th>
+              <th>Distance (km)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($LongestRoutes as $Long): ?>
+              <tr>
+                <td>
+                  <?php echo $Long['RouteID']; ?>
+                </td>
+                <td>
+                  <?php echo $Long['Distance']; ?>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+        <br>
+        <h4>Expanded Schedule</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Weekend/Weekday</th>
+              <th>Route No.</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Departure Time</th>
+              <th>Arrival Time</th>
+              <th>Day of Week</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($RouteSchedule as $RS): ?>
+              <tr>
+                <td>
+                  <?php echo $RS['DayCategory']; ?>
+                </td>
+                <td>
+                  <?php echo $RS['RouteID']; ?>
+                </td>
+                <td>
+                  <?php echo $RS['StartStation']; ?>
+                </td>
+                <td>
+                  <?php echo $RS['EndStation']; ?>
+                </td>
+                <td>
+                  <?php echo $RS['StartTime']; ?>
+                </td>
+                <td>
+                  <?php echo $RS['EndTime']; ?>
+                </td>
+                <td>
+                  <?php echo $RS['DayOfWeek']; ?>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+        <br>
+        <h4>Compact Schedule</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Running Time No.</th>
+              <th>Route No.</th>
+              <th>Departure Time</th>
+              <th>Arrival Time</th>
+              <th>Day</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($WeekdayRoutes as $WeekdayRoute): ?>
+              <tr>
+                <td>
+                  <?php echo $WeekdayRoute['RunningTimeID']; ?>
+                </td>
+                <td>
+                  <?php echo $WeekdayRoute['RouteID']; ?>
+                </td>
+                <td>
+                  <?php echo $WeekdayRoute['StartTime']; ?>
+                </td>
+                <td>
+                  <?php echo $WeekdayRoute['EndTime']; ?>
+                </td>
+                <td>
+                  <?php echo $WeekdayRoute['DayOfWeek']; ?>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+        <br><br>
+      </div>
 
-      </div>
+      <!--Trains Tab -->
       <div class="tab-pane fade" id="trains">
-        <h2>Trains Content</h2>
+        <h2>Trains</h2>
+        <h4>Our Trains</h4>
+        <p>insert pictures below each</p>
+        <div id="educational-content">
+        </div>
+        <br>
+        <h4>Train Details</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Train No.</th>
+              <th>Maximum Load (lbs)</th>
+              <th>Passenger Capacity</th>
+              <th>Route No.</th>
+              <th>From</th>
+              <th>To</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($PassengerTrains as $PassTrains): ?>
+              <tr>
+                <td>
+                  <?php echo $PassTrains['TrainID']; ?>
+                </td>
+                <td>
+                  <?php echo $PassTrains['MaximumWeight']; ?>
+                </td>
+                <td>
+                  <?php echo $PassTrains['TotalPassengerCount']; ?>
+                </td>
+                <td>
+                  <?php echo $PassTrains['RouteID']; ?>
+                </td>
+                <td>
+                  <?php echo $PassTrains['StartStation']; ?>
+                </td>
+                <td>
+                  <?php echo $PassTrains['EndStation']; ?>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+        <br>
+        <h4>Engine & Car Models</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Model No.</th>
+              <th>Model Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($RailCarInfo as $RCI): ?>
+              <tr>
+                <td>
+                  <?php echo $RCI['ModelNumber']; ?>
+                </td>
+                <td>
+                  <?php echo $RCI['ModelName']; ?>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+        <br>
+        <h4>Number of Operating Trains per Route</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Route No.</th>
+              <th>Number of Operating Trains</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($RouteTrainCount as $RTC): ?>
+              <tr>
+                <td>
+                  <?php echo $RTC['RouteID']; ?>
+                </td>
+                <td>
+                  <?php echo $RTC['NumberOfTrains']; ?>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+        <br><br>
       </div>
+
+      <!-- Stations Tab -->
       <div class="tab-pane fade" id="stations">
         <h2>Stations Content</h2>
         <div id="station-info">
 
         </div>
       </div>
+
+      <!-- Educational Information Tab -->
       <div class="tab-pane fade" id="edu-info">
+      <h2>Educational Information</h2>
         <div id="railwayInfo">
           <?php
-            // Include the PHP file that generates the XML content
-            include 'display-railway-info.php';
+          // Include the PHP file that generates the XML content
+          include 'display-railway-info.php';
           ?>
         </div>
 
-<!-- This is the uhhhh SOAP / RestJson stuff -->
+        <!-- SOAP stuff -->
+        <script>
+        fetch('http://localhost/RailwaySystemWebsite/Home%20Page/displayedu.php')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            let html = '<p>';
 
-<h4>Our Railcars</h4>
-<div id="educational-content">
+            if (Array.isArray(data)) {
+              data.forEach(info => {
+                html += `<p><b>${info.Header}</b><br>${info.information}</p><br>`;
+              });
+              html += '</p>';
 
+              // Display fetched data in the designated div
+              document.getElementById('educational-content').innerHTML = html;
+            } else {
+              console.error('Received data is not an array:', data);
+            }
+          })
+          
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Error fetching data');
+          });
+        </script>
 
-</div>
+                </div>
+              </div>
+            </div>
 
-<script>
- fetch('http://localhost/RailwaySystemWebsite/Home%20Page/displayedu.php')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    let html = '<ul>';
-
-    if (Array.isArray(data)) {
-      data.forEach(info => {
-        html += `<h6>${info.Header}</h6><p>${info.information}</p></li>`;
-      });
-      html += '</ul>';
-
-      // Display fetched data in the designated div
-      document.getElementById('educational-content').innerHTML = html;
-    } else {
-      console.error('Received data is not an array:', data);
-    }
-  })
-  
-  .catch(error => {
-    console.error('Error:', error);
-    alert('Error fetching data');
-  });
-</script>
-
-        </div>
-    </div>
-  </div>
-
-  <!-- Script Links for Bootstrap JS and jQuery -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script src="XMLscript.js"></script>
+    <!-- Script Links for Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 
 

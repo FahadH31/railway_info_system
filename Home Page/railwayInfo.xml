@@ -1,14 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <railwayInfo>
     <history>
-        <event>
-            <date>1804</date>
-            <description>First steam-powered locomotive invented by Richard Trevithick.</description>
-        </event>
-        <event>
-            <date>1825</date>
-            <description>Opening of the Stockton and Darlington Railway, the first public railway to carry both passengers and freight.</description>
-        </event>
+        <events>
+    <event>
+        <date>1830</date>
+        <description>The Liverpool and Manchester Railway opens, marking the debut of George Stephenson's groundbreaking locomotive, "The Rocket," setting new standards for speed and efficiency in railway travel.</description>
+    </event>
+    <event>
+        <date>1837</date>
+        <description>The Grand Junction Railway, the world's first long-distance railway, is opened in England, connecting Birmingham to Warrington.</description>
+    </event>
+    <event>
+        <date>1848</date>
+        <description>The first railway to span a nation, the Great Indian Peninsula Railway, begins operations in India, significantly enhancing transportation across the subcontinent.</description>
+    </event>
+    <event>
+        <date>1869</date>
+        <description>The completion of the First Transcontinental Railroad in the United States, linking the east and west coasts and revolutionizing travel and commerce across the country.</description>
+    </event>
+    <event>
+        <date>1883</date>
+        <description>The American Railway Association introduces standard time zones, allowing for consistent schedules and timetables across the expanding railway network.</description>
+    </event>
+    <event>
+        <date>1889</date>
+        <description>The inauguration of the Forth Railway Bridge in Scotland, a pioneering steel structure and a symbol of engineering excellence in railway infrastructure.</description>
+    </event>
+    <event>
+        <date>1923</date>
+        <description>The formation of the "Big Four" railway companies in the United Kingdom following the grouping of various smaller companies, leading to more efficient management and operations.</description>
+    </event>
+    <event>
+        <date>1934</date>
+        <description>The introduction of the streamlined "Flying Scotsman" train service in the United Kingdom, exemplifying speed and modern design in railway travel.</description>
+    </event>
+    <event>
+        <date>1955</date>
+        <description>The introduction of Japan's high-speed "Shinkansen" bullet train, setting new standards for speed, safety, and comfort in rail transportation.</description>
+    </event>
+    <event>
+        <date>1981</date>
+        <description>The opening of France's TGV (Train à Grande Vitesse), Europe's first high-speed rail service, revolutionizing travel on the continent.</description>
+    </event>
+    <event>
+        <date>2007</date>
+        <description>China debuts its high-speed rail system, showcasing technological advancements and rapidly expanding the world's largest network of high-speed trains.</description>
+    </event>
+    <event>
+        <date>2021</date>
+        <description>Continued advancements in railway technology include the development of maglev trains and further expansion of high-speed rail networks worldwide, emphasizing sustainability and efficiency in modern transportation systems.</description>
+    </event>
+</events>
+
         <!-- Add more historical events -->
     </history>
     <interestingFacts>

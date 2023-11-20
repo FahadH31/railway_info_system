@@ -1,16 +1,16 @@
-- All Views Content 
+- Views 7 & 8.
+- Adjust some of the views to reduce redunduncy and errors.
+- Add pictures/background pics.
 
-- All required XML/SOAP stuff. (-fahad)
-- Detailed ReadME document on how to install/setup project. ( I think this is the report stuff)
+- Refactor and Organize Code.
 
-
-- Alerts for buying/removing tickets.
-- Redirect to MyTickets Page when a ticket is cancelled
 - About Us Page
+- Complete Educational Info Page
 
-
-Currently Targetted Tasks
 - Potentially Expand on Database
+
+
+- Detailed ReadME document on how to install/setup project.
 
 
 
