@@ -1,6 +1,6 @@
 <?php
 
-$conn = mysqli_connect('localhost:3306', 'root', 'fahad1306', 'RailwaySystemWebsite');
+$conn = mysqli_connect('localhost:3306', 'root', '123456', 'RailwaySystemWebsite');
 
 // Check connection
 if (!$conn) {

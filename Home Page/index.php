@@ -2,7 +2,7 @@
 
 session_start();
 // Connect to the database
-$conn = mysqli_connect('localhost:3306', 'root', 'fahad1306', 'RailwaySystemWebsite');
+$conn = mysqli_connect('localhost:3306', 'root', '123456', 'RailwaySystemWebsite');
 
 // Check connection
 if (!$conn) {
@@ -52,9 +52,20 @@ if (!$conn) {
 
 
   //View 7
-  $Dest = 'SELECT DISTINCT U.Username, U.Location AS CurrentLocation, S.Location AS PossibleDestination FROM User U JOIN Routes R ON U.Location = (SELECT S.Location FROM Stations S WHERE S.StationID = R.StartStation) JOIN Stations S ON R.EndStation = S.StationID';
+
+  if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+
+
+  $loggedInUsername = $_SESSION['username'];
+  $Dest = "SELECT DISTINCT U.Username, U.Location AS CurrentLocation, S.Location AS PossibleDestination 
+  FROM User U 
+  JOIN Routes R ON U.Location = (SELECT S.Location FROM Stations S WHERE S.StationID = R.StartStation) 
+  JOIN Stations S ON R.EndStation = S.StationID
+  WHERE U.Username = '$loggedInUsername'";
   $DestRoute = mysqli_query($conn, $Dest);
   $PossibleDestination = mysqli_fetch_all($DestRoute, MYSQLI_ASSOC);
+
+  }
 
   //View 8
   $TRange = 'SELECT Routes.RouteID, RunningTimes.StartTime, Routes.StartStation FROM Routes JOIN RunningTimes ON Routes.RouteID = RunningTimes.RouteID WHERE RunningTimes.StartTime BETWEEN "09:00:00" AND "13:00:00"';
@@ -601,7 +612,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
       <div class="tab-pane fade" id="stations">
         <h2>Stations Content</h2>
         <div id="station-info">
+              <h4>My Stations</h4>
+              <table>
+          <thead>
+            <tr>
+              <th>Closest Station</th>
+              <th>Possible Destinations</th>
+            </tr>
+          </thead>
+          <tbody>
+          <?php
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+    // Show logout button if logged in
 
+    foreach ($PossibleDestination as $PD) {
+        echo '<tr>
+                <td>' . $PD["CurrentLocation"] . '</td>
+                <td>' . $PD["PossibleDestination"] . '</td>
+              </tr>';
+    }
+}
+?>
+
+        </tbody>
+          </table>
+          <br><br>
         </div>
       </div>
 
