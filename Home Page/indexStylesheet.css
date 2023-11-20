@@ -111,14 +111,19 @@ tr:nth-child(even) {
 
 #educational-content, .info-section{
   padding: 10px;
-  padding-top: 20px;
+  padding-bottom: 0px;
   margin-right: 10vw;
-  background-color: #f8a96c;
-  border-radius: 5px;
+  background-color: wheat;
+  border-radius: 5pxrgb(240, 193, 158)
 }
 
 .light-yellow{
   background-color: #fdf6c4;
+}
+
+.edu-img{
+  width: 100px;
+  height: auto;
 }
 
 
