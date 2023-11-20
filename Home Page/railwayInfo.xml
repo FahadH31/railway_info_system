@@ -2,56 +2,55 @@
 <railwayInfo>
     <history>
         <events>
-    <event>
-        <date>1830</date>
-        <description>The Liverpool and Manchester Railway opens, marking the debut of George Stephenson's groundbreaking locomotive, "The Rocket," setting new standards for speed and efficiency in railway travel.</description>
-    </event>
-    <event>
-        <date>1837</date>
-        <description>The Grand Junction Railway, the world's first long-distance railway, is opened in England, connecting Birmingham to Warrington.</description>
-    </event>
-    <event>
-        <date>1848</date>
-        <description>The first railway to span a nation, the Great Indian Peninsula Railway, begins operations in India, significantly enhancing transportation across the subcontinent.</description>
-    </event>
-    <event>
-        <date>1869</date>
-        <description>The completion of the First Transcontinental Railroad in the United States, linking the east and west coasts and revolutionizing travel and commerce across the country.</description>
-    </event>
-    <event>
-        <date>1883</date>
-        <description>The American Railway Association introduces standard time zones, allowing for consistent schedules and timetables across the expanding railway network.</description>
-    </event>
-    <event>
-        <date>1889</date>
-        <description>The inauguration of the Forth Railway Bridge in Scotland, a pioneering steel structure and a symbol of engineering excellence in railway infrastructure.</description>
-    </event>
-    <event>
-        <date>1923</date>
-        <description>The formation of the "Big Four" railway companies in the United Kingdom following the grouping of various smaller companies, leading to more efficient management and operations.</description>
-    </event>
-    <event>
-        <date>1934</date>
-        <description>The introduction of the streamlined "Flying Scotsman" train service in the United Kingdom, exemplifying speed and modern design in railway travel.</description>
-    </event>
-    <event>
-        <date>1955</date>
-        <description>The introduction of Japan's high-speed "Shinkansen" bullet train, setting new standards for speed, safety, and comfort in rail transportation.</description>
-    </event>
-    <event>
-        <date>1981</date>
-        <description>The opening of France's TGV (Train à Grande Vitesse), Europe's first high-speed rail service, revolutionizing travel on the continent.</description>
-    </event>
-    <event>
-        <date>2007</date>
-        <description>China debuts its high-speed rail system, showcasing technological advancements and rapidly expanding the world's largest network of high-speed trains.</description>
-    </event>
-    <event>
-        <date>2021</date>
-        <description>Continued advancements in railway technology include the development of maglev trains and further expansion of high-speed rail networks worldwide, emphasizing sustainability and efficiency in modern transportation systems.</description>
-    </event>
-</events>
-
+            <event>
+                <date>1830</date>
+                <description>The Liverpool and Manchester Railway opens, marking the debut of George Stephenson's groundbreaking locomotive, "The Rocket," setting new standards for speed and efficiency in railway travel.</description>
+            </event>
+            <event>
+                <date>1837</date>
+                <description>The Grand Junction Railway, the world's first long-distance railway, is opened in England, connecting Birmingham to Warrington.</description>
+            </event>
+            <event>
+                <date>1848</date>
+                <description>The first railway to span a nation, the Great Indian Peninsula Railway, begins operations in India, significantly enhancing transportation across the subcontinent.</description>
+            </event>
+            <event>
+                <date>1869</date>
+                <description>The completion of the First Transcontinental Railroad in the United States, linking the east and west coasts and revolutionizing travel and commerce across the country.</description>
+            </event>
+            <event>
+                <date>1883</date>
+                <description>The American Railway Association introduces standard time zones, allowing for consistent schedules and timetables across the expanding railway network.</description>
+            </event>
+            <event>
+                <date>1889</date>
+                <description>The inauguration of the Forth Railway Bridge in Scotland, a pioneering steel structure and a symbol of engineering excellence in railway infrastructure.</description>
+            </event>
+            <event>
+                <date>1923</date>
+                <description>The formation of the "Big Four" railway companies in the United Kingdom following the grouping of various smaller companies, leading to more efficient management and operations.</description>
+            </event>
+            <event>
+                <date>1934</date>
+                <description>The introduction of the streamlined "Flying Scotsman" train service in the United Kingdom, exemplifying speed and modern design in railway travel.</description>
+            </event>
+            <event>
+                <date>1955</date>
+                <description>The introduction of Japan's high-speed "Shinkansen" bullet train, setting new standards for speed, safety, and comfort in rail transportation.</description>
+            </event>
+            <event>
+                <date>1981</date>
+                <description>The opening of France's TGV (Train à Grande Vitesse), Europe's first high-speed rail service, revolutionizing travel on the continent.</description>
+            </event>
+            <event>
+                <date>2007</date>
+                <description>China debuts its high-speed rail system, showcasing technological advancements and rapidly expanding the world's largest network of high-speed trains.</description>
+            </event>
+            <event>
+                <date>2021</date>
+                <description>Continued advancements in railway technology include the development of maglev trains and further expansion of high-speed rail networks worldwide, emphasizing sustainability and efficiency in modern transportation systems.</description>
+            </event>
+        </events>
         <!-- Add more historical events -->
     </history>
     <interestingFacts>
@@ -60,9 +59,55 @@
             <description>The Trans-Siberian Railway is the world's longest railway, spanning approximately 9,289 kilometers.</description>
         </fact>
         <fact>
-            <title>High-Speed Train</title>
-            <description>The Shinkansen in Japan is one of the fastest trains in the world, reaching speeds of up to 320 km/h.</description>
+            <title>Fastest Train</title>
+            <description>The maglev train in Japan holds the record for the fastest train in the world, reaching speeds of up to 603 km/h (375 mph) during test runs.</description>
         </fact>
+
+        <fact>
+            <title>Oldest Functioning Railway</title>
+            <description>The Middleton Railway in Leeds, England, holds the title of the world's oldest continuously working railway. It began operations in 1758.</description>
+        </fact>
+
+        <fact>
+            <title>Busiest Train Station</title>
+            <description>Shinjuku Station in Tokyo, Japan, holds the title of the world's busiest train station, serving over 3.6 million passengers daily.</description>
+        </fact>
+
+        <fact>
+            <title>Longest Railway Tunnel</title>
+            <description>The Gotthard Base Tunnel in Switzerland is the world's longest railway tunnel, spanning 57.1 kilometers (35.5 miles).</description>
+        </fact>
+
+        <fact>
+            <title>Most Elevated Railway</title>
+            <description>The Qinghai-Tibet Railway in China is the highest railway in the world, reaching an elevation of 5,072 meters (16,640 feet) at its highest point.</description>
+        </fact>
+
+        <fact>
+            <title>Heaviest Train</title>
+            <description>A train in Australia set the record for the heaviest train, weighing over 99,700 tons and stretching for almost 7.3 kilometers (4.5 miles).</description>
+        </fact>
+
+        <fact>
+            <title>Longest Train</title>
+            <description>The longest freight train recorded was in Australia, stretching over 7.3 kilometers (4.5 miles) and consisting of 682 wagons.</description>
+        </fact>
+
+        <fact>
+            <title>Smallest Train Station</title>
+            <description>The smallest train station in the UK is the halt at Coombe Junction on the Looe Valley Line, Cornwall. It consists of only one platform.</description>
+        </fact>
+
+        <fact>
+            <title>Longest Railway Journey</title>
+            <description>The longest scheduled railway journey is from Moscow to Pyongyang, covering a distance of approximately 10,267 kilometers (6,380 miles).</description>
+        </fact>
+
+        <fact>
+            <title>Most Expensive Railway</title>
+            <description>The Channel Tunnel, connecting England and France, is one of the most expensive railway projects, costing over £4.65 billion to construct.</description>
+        </fact>
+
         <!-- Add more interesting facts -->
     </interestingFacts>
     <trainModels>

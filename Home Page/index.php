@@ -18,20 +18,18 @@ if (!$conn) {
 
 
   //View 2
-  $PassTrains = 'SELECT T.TrainID, MAX(R.Weight) AS MaximumWeight, SUM(R.PassengerCapacity) AS TotalPassengerCount, RT.RouteID, S1.Location AS StartStation, S2.Location AS EndStation 
-                FROM Trains T 
-                JOIN RailCars R ON T.BodyRailCarType = R.ModelNumber 
-                JOIN Routes RT ON T.TrainID = RT.OperatingTrains 
-                JOIN Stations S1 ON RT.StartStation = S1.StationID 
-                JOIN Stations S2 ON RT.EndStation = S2.StationID 
-                WHERE R.Category = "Passenger" 
-                GROUP BY T.TrainID, RT.RouteID, S1.Location, S2.Location';
+  $PassTrains = 'SELECT T.TrainID, MAX(R.Weight) AS MaximumWeight, SUM(R.PassengerCapacity) AS TotalPassengerCount
+                  FROM Trains T 
+                  JOIN RailCars R ON T.BodyRailCarType = R.ModelNumber 
+                  JOIN Routes RT ON T.TrainID = RT.OperatingTrains 
+                  WHERE R.Category = "Passenger" 
+                  GROUP BY T.TrainID';
 
   $PasseTrain = mysqli_query($conn, $PassTrains);
   $PassengerTrains = mysqli_fetch_all($PasseTrain, MYSQLI_ASSOC);
 
   //View 3
-  $RTC = 'SELECT r.RouteID, (SELECT COUNT(*) FROM Trains T JOIN Routes rt ON rt.OperatingTrains = t.TrainID WHERE rt.RouteID = r.RouteID) AS NumberOfTrains FROM Routes r';
+  $RTC = 'SELECT r.RouteID,(SELECT t.TrainID FROM Trains t JOIN Routes rt ON rt.OperatingTrains = t.TrainID WHERE rt.RouteID = r.RouteID) AS OperatingTrainID FROM Routes r;';
   $RTC2 = mysqli_query($conn, $RTC);
   $RouteTrainCount = mysqli_fetch_all($RTC2, MYSQLI_ASSOC);
 
@@ -483,49 +481,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
           </tbody>
         </table>
         <br>
-        <h4>Expanded Schedule</h4>
-        <table>
-          <thead>
-            <tr>
-              <th>Weekend/Weekday</th>
-              <th>Route No.</th>
-              <th>From</th>
-              <th>To</th>
-              <th>Departure Time</th>
-              <th>Arrival Time</th>
-              <th>Day of Week</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($RouteSchedule as $RS): ?>
-              <tr>
-                <td>
-                  <?php echo $RS['DayCategory']; ?>
-                </td>
-                <td>
-                  <?php echo $RS['RouteID']; ?>
-                </td>
-                <td>
-                  <?php echo $RS['StartStation']; ?>
-                </td>
-                <td>
-                  <?php echo $RS['EndStation']; ?>
-                </td>
-                <td>
-                  <?php echo $RS['StartTime']; ?>
-                </td>
-                <td>
-                  <?php echo $RS['EndTime']; ?>
-                </td>
-                <td>
-                  <?php echo $RS['DayOfWeek']; ?>
-                </td>
-              </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
-        <br>
-        <h4>Compact Schedule</h4>
+        <h4>Schedule</h4>
         <table>
           <thead>
             <tr>
@@ -574,11 +530,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
           <thead>
             <tr>
               <th>Train No.</th>
-              <th>Maximum Load (lbs)</th>
+              <th>Maximum Load (kgs)</th>
               <th>Passenger Capacity</th>
-              <th>Route No.</th>
-              <th>From</th>
-              <th>To</th>
             </tr>
           </thead>
           <tbody>
@@ -592,15 +545,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
                 </td>
                 <td>
                   <?php echo $PassTrains['TotalPassengerCount']; ?>
-                </td>
-                <td>
-                  <?php echo $PassTrains['RouteID']; ?>
-                </td>
-                <td>
-                  <?php echo $PassTrains['StartStation']; ?>
-                </td>
-                <td>
-                  <?php echo $PassTrains['EndStation']; ?>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -629,12 +573,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
           </tbody>
         </table>
         <br>
-        <h4>Number of Operating Trains per Route</h4>
+        <h4>Route Operating Train</h4>
         <table>
           <thead>
             <tr>
               <th>Route No.</th>
-              <th>Number of Operating Trains</th>
+              <th>Train No.</th>
             </tr>
           </thead>
           <tbody>
@@ -644,7 +588,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
                   <?php echo $RTC['RouteID']; ?>
                 </td>
                 <td>
-                  <?php echo $RTC['NumberOfTrains']; ?>
+                  <?php echo $RTC['OperatingTrainID']; ?>
                 </td>
               </tr>
             <?php endforeach; ?>
