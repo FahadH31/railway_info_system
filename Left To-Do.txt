@@ -1,14 +1,8 @@
-- Views 7 & 8.
-- Add pictures/background pics.
-
-- Refactor and Organize Code.
-
-- About Us Page
-
-- Potentially Expand on Database
-
-
-- Detailed ReadME document on how to install/setup project.
+- View 7 (Kev)
+- Add pictures to trains tab. (Kev)
+- About Us Page (Fahad)
+- Refactor and Organize Code. (Fahad)
+- Detailed ReadME document on how to install/setup project. (Fahad)
 
 
 

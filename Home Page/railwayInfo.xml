@@ -5,6 +5,7 @@
             <event>
                 <date>1830</date>
                 <description>The Liverpool and Manchester Railway opens, marking the debut of George Stephenson's groundbreaking locomotive, "The Rocket," setting new standards for speed and efficiency in railway travel.</description>
+                <image>../Images/rocket-locomotive.jpg</image>
             </event>
             <event>
                 <date>1837</date>
@@ -13,6 +14,7 @@
             <event>
                 <date>1848</date>
                 <description>The first railway to span a nation, the Great Indian Peninsula Railway, begins operations in India, significantly enhancing transportation across the subcontinent.</description>
+                <image>../Images/great-indian-railway.jpg</image>
             </event>
             <event>
                 <date>1869</date>
@@ -37,6 +39,7 @@
             <event>
                 <date>1955</date>
                 <description>The introduction of Japan's high-speed "Shinkansen" bullet train, setting new standards for speed, safety, and comfort in rail transportation.</description>
+                <image>../Images/shinkansen-bullet-train.jpg</image>
             </event>
             <event>
                 <date>1981</date>
@@ -107,18 +110,6 @@
             <title>Most Expensive Railway</title>
             <description>The Channel Tunnel, connecting England and France, is one of the most expensive railway projects, costing over £4.65 billion to construct.</description>
         </fact>
-
         <!-- Add more interesting facts -->
     </interestingFacts>
-    <trainModels>
-        <model>
-            <name>ICE 4</name>
-            <description>The Intercity-Express 4 is a high-speed train operated in Germany and other European countries.</description>
-        </model>
-        <model>
-            <name>Maglev</name>
-            <description>Magnetic levitation trains use magnetic fields for propulsion, achieving high speeds with minimal friction.</description>
-        </model>
-        <!-- Add more train models -->
-    </trainModels>
 </railwayInfo>

@@ -6,7 +6,6 @@
             <xs:sequence>
                 <xs:element name="history" type="historyType"/>
                 <xs:element name="interestingFacts" type="interestingFactsType"/>
-                <xs:element name="trainModels" type="trainModelsType"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -18,6 +17,7 @@
                     <xs:sequence>
                         <xs:element name="date" type="xs:string"/>
                         <xs:element name="description" type="xs:string"/>
+                        <xs:element name="image" type="xs:anyURI"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -36,18 +36,4 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
-
-    <xs:complexType name="trainModelsType">
-        <xs:sequence>
-            <xs:element name="model" maxOccurs="unbounded">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="name" type="xs:string"/>
-                        <xs:element name="description" type="xs:string"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
-
 </xs:schema>

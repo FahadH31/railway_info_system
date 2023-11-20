@@ -532,7 +532,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
       <div class="tab-pane fade" id="trains">
         <h2>Trains</h2>
         <h4>Our Trains</h4>
-        <p>insert pictures below each</p>
         <div id="educational-content">
         </div>
         <br>
@@ -557,6 +556,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
                 <td>
                   <?php echo $PassTrains['TotalPassengerCount']; ?>
                 </td>
+
               </tr>
             <?php endforeach; ?>
           </tbody>
