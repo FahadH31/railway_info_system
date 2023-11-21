@@ -1,263 +1,3 @@
-<?php
-
-session_start();
-// Connect to the database
-$conn = mysqli_connect('localhost:3306', 'root', '123456', 'RailwaySystemWebsite');
-
-// Check connection
-if (!$conn) {
-  echo 'Connection error: ' . mysqli_connect_error();
-}
-
-//Views
-{
-  //View 1
-  $RI = 'SELECT Routes.RouteID, Routes.Duration, Routes.Distance, Trains.TrainID, s1.Location AS StartStation, s2.Location AS EndStation FROM Routes JOIN Trains ON Routes.OperatingTrains = Trains.TrainID JOIN Stations s1 ON Routes.StartStation = s1.StationID JOIN Stations s2 ON Routes.EndStation = s2.StationID';
-  $RI2 = mysqli_query($conn, $RI);
-  $RouteInfo = mysqli_fetch_all($RI2, MYSQLI_ASSOC);
-
-
-  //View 2
-  $PassTrains = 'SELECT T.TrainID, MAX(R.Weight) AS MaximumWeight, SUM(R.PassengerCapacity) AS TotalPassengerCount
-                  FROM Trains T 
-                  JOIN RailCars R ON T.BodyRailCarType = R.ModelNumber 
-                  JOIN Routes RT ON T.TrainID = RT.OperatingTrains 
-                  WHERE R.Category = "Passenger" 
-                  GROUP BY T.TrainID';
-
-  $PasseTrain = mysqli_query($conn, $PassTrains);
-  $PassengerTrains = mysqli_fetch_all($PasseTrain, MYSQLI_ASSOC);
-
-  //View 3
-  $RTC = 'SELECT r.RouteID,(SELECT t.TrainID FROM Trains t JOIN Routes rt ON rt.OperatingTrains = t.TrainID WHERE rt.RouteID = r.RouteID) AS OperatingTrainID FROM Routes r;';
-  $RTC2 = mysqli_query($conn, $RTC);
-  $RouteTrainCount = mysqli_fetch_all($RTC2, MYSQLI_ASSOC);
-
-  //View 4
-  $RCI = 'SELECT RailCars.ModelNumber, RailCars.ModelName FROM RailCars LEFT JOIN Trains ON RailCars.ModelNumber = Trains.EngineRailCarType UNION SELECT RailCars.ModelNumber, RailCars.ModelName FROM RailCars RIGHT JOIN Trains ON RailCars.ModelNumber = Trains.EngineRailCarType';
-  $RCI2 = mysqli_query($conn, $RCI);
-  $RailCarInfo = mysqli_fetch_all($RCI2, MYSQLI_ASSOC);
-
-  //View 5
-  $RS = 'SELECT * FROM (SELECT "Weekday" AS DayCategory, r.RouteID, r.StartStation, r.EndStation, rt.StartTime, rt.EndTime, rt.DayOfWeek FROM Routes r INNER JOIN RunningTimes rt ON r.RouteID = rt.RouteID WHERE rt.DayOfWeek IN ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday") UNION SELECT "Weekend" AS DayCategory, r.RouteID, r.StartStation, r.EndStation, rt.StartTime, rt.EndTime, rt.DayOfWeek FROM Routes r INNER JOIN RunningTimes rt ON r.RouteID = rt.RouteID Where rt.DayOfWeek IN ("Saturday", "Sunday")) AS CombinedData';
-  $RS2 = mysqli_query($conn, $RS);
-  $RouteSchedule = mysqli_fetch_all($RS2, MYSQLI_ASSOC);
-
-  //View 6
-  $Long = 'SELECT RouteID, Distance
-        FROM Routes
-        ORDER BY Distance DESC';
-  $LongR = mysqli_query($conn, $Long);
-  $LongestRoutes = mysqli_fetch_all($LongR, MYSQLI_ASSOC);
-
-
-  //View 7
-
-  if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-
-
-    $loggedInUsername = $_SESSION['username'];
-    $Dest = "SELECT DISTINCT U.Username, U.Location AS CurrentLocation, S.Location AS PossibleDestination 
-  FROM User U 
-  JOIN Routes R ON U.Location = (SELECT S.Location FROM Stations S WHERE S.StationID = R.StartStation) 
-  JOIN Stations S ON R.EndStation = S.StationID
-  WHERE U.Username = '$loggedInUsername'";
-    $DestRoute = mysqli_query($conn, $Dest);
-    $PossibleDestination = mysqli_fetch_all($DestRoute, MYSQLI_ASSOC);
-
-  }
-
-
-  //View 7.5
-
-
-    $Dest2 = "SELECT 
-    U.Location AS CurrentLocation, 
-    S.Location AS PossibleDestination
-FROM 
-    User U 
-JOIN 
-    Routes R ON U.Location = (SELECT S.Location FROM Stations S WHERE S.StationID = R.StartStation) 
-JOIN 
-    Stations S ON R.EndStation = S.StationID
-GROUP BY 
-    U.Location, 
-    S.Location";
-
-    $DestRoute2 = mysqli_query($conn, $Dest2);
-    $PossibleDestination2 = mysqli_fetch_all($DestRoute2, MYSQLI_ASSOC);
-
-
-  //View 8
-  $TRange = 'SELECT Routes.RouteID, RunningTimes.StartTime, Routes.StartStation FROM Routes JOIN RunningTimes ON Routes.RouteID = RunningTimes.RouteID WHERE RunningTimes.StartTime BETWEEN "09:00:00" AND "13:00:00"';
-  $TimeRange = mysqli_query($conn, $TRange);
-  $RouteStartBetweenTimeRange = mysqli_fetch_all($TimeRange, MYSQLI_ASSOC);
-
-  //View 9
-  $WeekdayRoute = 'SELECT * 
-                FROM RunningTimes 
-                WHERE NOT (Dayofweek = "Sunday" OR Dayofweek = "Saturday")';
-  $WdayRoute = mysqli_query($conn, $WeekdayRoute);
-  $WeekdayRoutes = mysqli_fetch_all($WdayRoute, MYSQLI_ASSOC);
-
-  //View 10
-  $Tprices = 'SELECT AgeType, Cost 
-            FROM Ticket';
-  $Ticprices = mysqli_query($conn, $Tprices);
-  $TicketPrices = mysqli_fetch_all($Ticprices, MYSQLI_ASSOC);
-}
-
-// ACCOUNT SIGNUP STUFF
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-  if (isset($_POST['username'], $_POST['userPassword'])) {
-
-    if ($_POST['username'] != "" && $_POST['userPassword'] != "") {
-
-      $username = $_POST['username'];
-      $userPassword = $_POST['userPassword'];
-      $userLocation = $_POST['location'];
-
-      // Check if the username already exists
-      $checkQuery = "SELECT COUNT(*) as count FROM User WHERE Username = '$username'";
-      $result = $conn->query($checkQuery);
-
-      if ($result) {
-        $row = $result->fetch_assoc();
-        if ($row['count'] > 0) {
-          echo "<script>alert('Username already exists. Please choose a different username.');</script>";
-          echo "<script>window.location.href = '../Account Pages/signup.html';</script>";
-          exit();
-
-        } else {
-          // Username doesn't exist, proceed with insertion
-          $sql = "INSERT INTO User (Username, UserPassword,Location) VALUES ('$username', '$userPassword', '$userLocation')";
-
-          if ($conn->query($sql) === TRUE) {
-            echo "<script>alert('Account Successfully Created. Please login');</script>";
-            echo "<script>window.location.href = '../Account Pages/login.html';</script>";
-            exit();
-          } else {
-            echo "<script>alert('Error with Username or Unfilled Cells.');</script>";
-          }
-        }
-      } else {
-        echo "<script>alert('Error checking for existing username');</script>";
-      }
-    }
-  }
-}
-
-
-// ACCOUNT LOGIN STUFF
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  if (isset($_POST['unlogin'], $_POST['uplogin'])) {
-    $usernamelogin = $_POST['unlogin'];
-    $userPasswordlogin = $_POST['uplogin'];
-
-    // Check if the username exists and password matches
-    $checkQuery = "SELECT UserPassword FROM User WHERE Username = '$usernamelogin'";
-    $result2 = $conn->query($checkQuery);
-
-    if ($result2 && $result2->num_rows > 0) {
-      $row2 = $result2->fetch_assoc();
-      $storedPassword = $row2['UserPassword'];
-
-      // Check if the password matches
-      if ($userPasswordlogin === $storedPassword) {
-        echo "<script>alert('Successful Login');</script>";
-        $_SESSION['logged_in'] = true;
-        $_SESSION['username'] = $usernamelogin;
-        echo "<script>window.location.href = 'index.php';</script>";
-      } else {
-        echo "<script>alert('Credentials do not match');</script>";
-        echo "<script>window.location.href = '../Account Pages/login.html';</script>";
-      }
-    } else {
-      echo "<script>alert('Username does not exist');</script>";
-      echo "<script>window.location.href = '../Account Pages/login.html';</script>";
-    }
-    exit();
-  }
-}
-
-
-// MY TICKETS QUERY
-if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-  $loggedInUsername = $_SESSION['username'];
-
-  // Query to fetch tickets owned by the logged-in user
-  $getUserTicketsQuery = "SELECT RouteID, TicketType, COUNT(*) as TicketCount FROM UserTickets WHERE Username = '$loggedInUsername' GROUP BY RouteID, TicketType";
-
-  // Execute the query
-  $userTicketsResult = mysqli_query($conn, $getUserTicketsQuery);
-
-  if ($userTicketsResult) {
-    $userTickets = mysqli_fetch_all($userTicketsResult, MYSQLI_ASSOC);
-  }
-}
-
-
-// PURCHASE TICKET STUFF
-if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-  if (isset($_POST['Type'], $_POST['Route'])) {
-    $ticketType = $_POST['Type'];
-    $routeID = $_POST['Route'];
-    $username = $_SESSION['username'];
-
-    // Fetch the cost of the ticket based on the selected ticket type and route
-    $ticketQuery = "SELECT Cost FROM Ticket WHERE AgeType = '$ticketType'";
-    $ticketResult = mysqli_query($conn, $ticketQuery);
-
-    if ($ticketResult && $ticketResult->num_rows > 0) {
-      $ticket = mysqli_fetch_assoc($ticketResult);
-      $cost = $ticket['Cost'];
-
-      // Insert ticket details into UserTickets table
-      $insertQuery = "INSERT INTO UserTickets (Username, RouteID, TicketType) VALUES ('$username', '$routeID', '$ticketType')";
-      if (mysqli_query($conn, $insertQuery)) {
-        echo "<script>alert('Ticket Purchased');</script>";
-        echo "<script>window.location.href = 'index.php';</script>";
-        exit();
-      } else {
-        echo "<script>alert('Error purchasing ticket.');</script>";
-      }
-    } else {
-      echo "<script>alert('Ticket not found.');</script>";
-    }
-  }
-}
-
-
-// DELETE TICKET STUFF
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
-  // Retrieve the RouteID and TicketType from the form
-  $routeID = $_POST['routeID'];
-  $ticketType = $_POST['ticketType'];
-
-  // Get the logged-in user's username
-  $loggedInUsername = $_SESSION['username'];
-
-  // Query to remove one specified ticket for the logged-in user
-  $removeTicketQuery = "DELETE FROM UserTickets 
-                        WHERE Username = '$loggedInUsername' 
-                        AND RouteID = '$routeID' 
-                        AND TicketType = '$ticketType' 
-                        LIMIT 1"; // Limit the deletion to one row
-
-  // Execute the query to remove the ticket
-  if (mysqli_query($conn, $removeTicketQuery)) {
-    // Redirect back to the page with refreshed ticket data
-    echo "<script>alert('Ticket Cancelled');</script>";
-    echo "<script>window.location.href = 'index.php';</script>";
-    exit();
-  } else {
-    echo "<script>alert('Error removing ticket');</script>";
-  }
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -270,6 +10,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
 </head>
 
 <body>
+  <?php
+    // Include required PHP files
+    require_once('db-connection.php');
+    require_once('views.php');
+    require_once('account-operations.php');
+  ?>
+
   <!-- Navigation Bar -->
   <nav class="navbar navbar-expand-lg navbar-dark">
     <a class="navbar-brand"><img id="logo" src="..\Images\train-icon.png"></a>
@@ -294,7 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
     ?>
     </button>
   </nav>
-
 
   <div id="main-content">
     <!-- Tabs List -->
@@ -527,22 +273,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($WeekdayRoutes as $WeekdayRoute): ?>
+            <?php foreach ($RouteSchedule as $RS): ?>
               <tr>
                 <td>
-                  <?php echo $WeekdayRoute['RunningTimeID']; ?>
+                  <?php echo $RS['RunningTimeID']; ?>
+                </td>
+                <td>                  <?php echo $RS['RouteID']; ?>
                 </td>
                 <td>
-                  <?php echo $WeekdayRoute['RouteID']; ?>
+                  <?php echo $RS['StartTime']; ?>
                 </td>
                 <td>
-                  <?php echo $WeekdayRoute['StartTime']; ?>
+                  <?php echo $RS['EndTime']; ?>
                 </td>
                 <td>
-                  <?php echo $WeekdayRoute['EndTime']; ?>
-                </td>
-                <td>
-                  <?php echo $WeekdayRoute['DayOfWeek']; ?>
+                  <?php echo $RS['DayOfWeek']; ?>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -568,18 +313,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($PassengerTrains as $PassTrains): ?>
+            <?php foreach ($TrainDetails as $TD): ?>
               <tr>
                 <td>
-                  <?php echo $PassTrains['TrainID']; ?>
+                  <?php echo $TD['TrainID']; ?>
                 </td>
                 <td>
-                  <?php echo $PassTrains['MaximumWeight']; ?>
+                  <?php echo $TD['MaximumWeight']; ?>
                 </td>
                 <td>
-                  <?php echo $PassTrains['TotalPassengerCount']; ?>
+                  <?php echo $TD['TotalPassengerCount']; ?>
                 </td>
-
               </tr>
             <?php endforeach; ?>
           </tbody>
@@ -616,13 +360,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($RouteTrainCount as $RTC): ?>
+            <?php foreach ($RouteOperatingTrain as $ROT): ?>
               <tr>
                 <td>
-                  <?php echo $RTC['RouteID']; ?>
+                  <?php echo $ROT['RouteID']; ?>
                 </td>
                 <td>
-                  <?php echo $RTC['OperatingTrainID']; ?>
+                  <?php echo $ROT['OperatingTrainID']; ?>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -663,32 +407,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
             }
             ?>
           </table>
-          <br><br>
+          <br>
           <h4>All Stations</h4>
           <table>
-          <thead>
-                    <tr>
-                      <th>Origin</th>
-                      <th>Destination</th>
-                    </tr>
-                  </thead>
+            <thead>
+              <tr>
+                <th>Origin</th>
+                <th>Destination</th>
+              </tr>
+            </thead>
             <?php
             // Check if the user is logged in (based on the session variable)
-            
-
-              foreach ($PossibleDestination2 as $PD2) {
-                echo '
-                  
+            foreach ($PossibleDestination2 as $PD2) {
+              echo '
                   <tbody>
                     <tr>
                     <td>' . $PD2["CurrentLocation"] . '</td>
                     <td>' . $PD2["PossibleDestination"] . '</td>
                     </tr>
                   </tbody>';
-              }
+            }
             ?>
           </table>
-
+          <br><br>
         </div>
       </div>
 
