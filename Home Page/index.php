@@ -278,7 +278,8 @@
                 <td>
                   <?php echo $RS['RunningTimeID']; ?>
                 </td>
-                <td>                  <?php echo $RS['RouteID']; ?>
+                <td>
+                  <?php echo $RS['RouteID']; ?>
                 </td>
                 <td>
                   <?php echo $RS['StartTime']; ?>
@@ -383,17 +384,18 @@
           <h4>My Stations</h4>
           <table>
             <?php
+            echo '
+            <thead>
+              <tr>
+                <th>Closest Station</th>
+                <th>Possible Destinations</th>
+              </tr>
+            </thead>';
             // Check if the user is logged in (based on the session variable)
             if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
               foreach ($PossibleDestination as $PD) {
-                echo '
-                  <thead>
-                    <tr>
-                      <th>Closest Station</th>
-                      <th>Possible Destinations</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+              echo '    
+                <tbody>
                     <tr>
                     <td>' . $PD["CurrentLocation"] . '</td>
                     <td>' . $PD["PossibleDestination"] . '</td>
