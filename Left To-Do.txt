@@ -1,7 +1,5 @@
-- View 7 (Kev)
-- Add pictures to trains tab. (Kev)
 - About Us Page (Fahad)
-- Refactor and Organize Code. (Fahad)
+
 - Detailed ReadME document on how to install/setup project. (Fahad)
 
 

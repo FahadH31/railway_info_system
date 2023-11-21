@@ -27,6 +27,7 @@
             <event>
                 <date>1889</date>
                 <description>The inauguration of the Forth Railway Bridge in Scotland, a pioneering steel structure and a symbol of engineering excellence in railway infrastructure.</description>
+                <image>../Images/forth-bridge.jpg</image>
             </event>
             <event>
                 <date>1923</date>
@@ -54,12 +55,12 @@
                 <description>Continued advancements in railway technology include the development of maglev trains and further expansion of high-speed rail networks worldwide, emphasizing sustainability and efficiency in modern transportation systems.</description>
             </event>
         </events>
-        <!-- Add more historical events -->
     </history>
     <interestingFacts>
         <fact>
             <title>Longest Railway</title>
             <description>The Trans-Siberian Railway is the world's longest railway, spanning approximately 9,289 kilometers.</description>
+            <image>../Images/trans-siberian-railroad.jpg</image>
         </fact>
         <fact>
             <title>Fastest Train</title>
@@ -74,11 +75,13 @@
         <fact>
             <title>Busiest Train Station</title>
             <description>Shinjuku Station in Tokyo, Japan, holds the title of the world's busiest train station, serving over 3.6 million passengers daily.</description>
+            <image>../Images/shinjuku-station.jpg</image>
         </fact>
 
         <fact>
             <title>Longest Railway Tunnel</title>
             <description>The Gotthard Base Tunnel in Switzerland is the world's longest railway tunnel, spanning 57.1 kilometers (35.5 miles).</description>
+            <image>../Images/g-base-tunnel.jpeg</image>
         </fact>
 
         <fact>
@@ -110,6 +113,5 @@
             <title>Most Expensive Railway</title>
             <description>The Channel Tunnel, connecting England and France, is one of the most expensive railway projects, costing over £4.65 billion to construct.</description>
         </fact>
-        <!-- Add more interesting facts -->
     </interestingFacts>
 </railwayInfo>

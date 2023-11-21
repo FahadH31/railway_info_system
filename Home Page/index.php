@@ -2,7 +2,7 @@
 
 session_start();
 // Connect to the database
-$conn = mysqli_connect('localhost:3306', 'root', '123456', 'RailwaySystemWebsite');
+$conn = mysqli_connect('localhost:3306', 'root', 'fahad1306', 'RailwaySystemWebsite');
 
 // Check connection
 if (!$conn) {
@@ -56,14 +56,14 @@ if (!$conn) {
   if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
 
 
-  $loggedInUsername = $_SESSION['username'];
-  $Dest = "SELECT DISTINCT U.Username, U.Location AS CurrentLocation, S.Location AS PossibleDestination 
+    $loggedInUsername = $_SESSION['username'];
+    $Dest = "SELECT DISTINCT U.Username, U.Location AS CurrentLocation, S.Location AS PossibleDestination 
   FROM User U 
   JOIN Routes R ON U.Location = (SELECT S.Location FROM Stations S WHERE S.StationID = R.StartStation) 
   JOIN Stations S ON R.EndStation = S.StationID
   WHERE U.Username = '$loggedInUsername'";
-  $DestRoute = mysqli_query($conn, $Dest);
-  $PossibleDestination = mysqli_fetch_all($DestRoute, MYSQLI_ASSOC);
+    $DestRoute = mysqli_query($conn, $Dest);
+    $PossibleDestination = mysqli_fetch_all($DestRoute, MYSQLI_ASSOC);
 
   }
 
@@ -245,7 +245,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Railway System</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <link type="text/css" rel="stylesheet" rel="stylesheet" href="indexStylesheet.css">
+  <link type="text/css" rel="stylesheet" href="indexStylesheet.css">
 </head>
 
 <body>
@@ -346,6 +346,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
       <!-- Buy Tickets Tab -->
       <div class="tab-pane fade show active" id="buy-tickets">
         <h2>Buy Tickets</h2>
+        <img src="../Images/train-tickets.jpg" class="page-image">
         <table>
           <tr>
             <th>Type</th>
@@ -417,7 +418,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
           </div>
           <br><br>
           <div class="ticket-buttons mt-3">
-            <button type="submit" name="purchase" class="btn btn-success">Purchase Ticket</button>
+            <button type="submit" name="purchase" class="btn btn-success" style = "margin-bottom: 20px;">Purchase Ticket</button>
           </div>
           </form>
         ';
@@ -432,6 +433,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
       <!-- Routes and Schedules Tab -->
       <div class="tab-pane fade" id="routes-schedules">
         <h2>Routes & Schedules</h2>
+        <img src="../Images/train-tracks.jpg" class="page-image">
         <h4>Route Details</h4>
         <table>
           <thead>
@@ -611,30 +613,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
       <!-- Stations Tab -->
       <div class="tab-pane fade" id="stations">
         <h2>Stations Content</h2>
+        <img src="../Images/train-station.jpg" class="page-image">
         <div id="station-info">
-              <h4>My Stations</h4>
-              <table>
-          <thead>
-            <tr>
-              <th>Closest Station</th>
-              <th>Possible Destinations</th>
-            </tr>
-          </thead>
-          <tbody>
-          <?php
-if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-    // Show logout button if logged in
-
-    foreach ($PossibleDestination as $PD) {
-        echo '<tr>
-                <td>' . $PD["CurrentLocation"] . '</td>
-                <td>' . $PD["PossibleDestination"] . '</td>
-              </tr>';
-    }
-}
-?>
-
-        </tbody>
+          <h4>My Stations</h4>
+          <table>
+            <?php
+            // Check if the user is logged in (based on the session variable)
+            if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+              foreach ($PossibleDestination as $PD) {
+                echo '
+                  <thead>
+                    <tr>
+                      <th>Closest Station</th>
+                      <th>Possible Destinations</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                    <td>' . $PD["CurrentLocation"] . '</td>
+                    <td>' . $PD["PossibleDestination"] . '</td>
+                    </tr>
+                  </tbody>';
+              }
+            } else {
+              // Show the prompt to login/signup link if not logged in
+              echo '<p id="login-signup-msg">To view nearby stations, <a href="..\Account Pages\signup.html">Create an Account</a> or <a
+              href="..\Account Pages\login.html">Log in.</a></p>';
+            }
+            ?>
           </table>
           <br><br>
         </div>
@@ -642,8 +648,8 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
 
       <!-- Educational Information Tab -->
       <div class="tab-pane fade" id="edu-info">
-      <h2>Educational Information</h2>
-      
+        <h2>Educational Information</h2>
+
         <div id="railwayInfo">
           <?php
           // Include the PHP file that generates the XML content
@@ -653,43 +659,43 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
 
         <!-- SOAP stuff -->
         <script>
-        fetch('http://localhost/RailwaySystemWebsite/Home%20Page/displayedu.php')
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return response.json();
-          })
-          .then(data => {
-            let html = '<p>';
+          fetch('http://localhost/RailwaySystemWebsite/Home%20Page/displayedu.php')
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              let html = '<p>';
 
-            if (Array.isArray(data)) {
-              data.forEach(info => {
-                html += `<p><b>${info.Header}</b><br>${info.information}</p><img style="height: 20vw; width=50vw;" src="${info.images}"><br><br>`;
-              });
-              html += '</p>';
+              if (Array.isArray(data)) {
+                data.forEach(info => {
+                  html += `<p><b>${info.Header}</b><br>${info.information}</p><img style="height: 20vw; width=50vw;" src="${info.images}"><br><br>`;
+                });
+                html += '</p>';
 
-              // Display fetched data in the designated div
-              document.getElementById('educational-content').innerHTML = html;
-            } else {
-              console.error('Received data is not an array:', data);
-            }
-          })
-          
-          .catch(error => {
-            console.error('Error:', error);
-            alert('Error fetching data');
-          });
+                // Display fetched data in the designated div
+                document.getElementById('educational-content').innerHTML = html;
+              } else {
+                console.error('Received data is not an array:', data);
+              }
+            })
+
+            .catch(error => {
+              console.error('Error:', error);
+              alert('Error fetching data');
+            });
         </script>
 
-                </div>
-              </div>
-            </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- Script Links for Bootstrap JS and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <!-- Script Links for Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 
 

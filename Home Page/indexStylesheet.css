@@ -4,8 +4,9 @@ body {
   font-size: 14pt;
 }
 
-h2{
-  background-color: #2aae47 ;
+
+h2 {
+  background-color: black;
   color: #FFFFFF;
   padding: 10px;
   border-radius: 15px;
@@ -36,7 +37,7 @@ h2{
   margin-left: auto;
 }
 
-.login-signup-btn{
+.login-signup-btn {
   border-radius: 20px;
   font-size: 14pt;
   transition: 0.4s;
@@ -57,14 +58,14 @@ h2{
 /* Active Tab */
 .nav-tabs .nav-link.active {
   background-color: black;
-  color: white; 
+  color: white;
   border-radius: 15px;
 }
 
 /* Inactive Tabs */
 .nav-tabs .nav-link {
   background-color: #f6f6f6;
-  color: #333; 
+  color: #333;
   transition: 0.4s;
 }
 
@@ -87,7 +88,7 @@ h2{
   padding-left: 16vw;
 }
 
-table{
+table {
   border: 3px solid black;
 }
 
@@ -109,28 +110,33 @@ tr:nth-child(even) {
   background-color: #f6f6f6;
 }
 
-#educational-content, .info-section{
-  padding: 10px;
-  padding-bottom: 0px;
+#educational-content,
+.info-section {
   margin-right: 10vw;
-  background-color: wheat;
-  border-radius: 5pxrgb(240, 193, 158)
+  background-color: #dfdede;
+  border-radius: 15px;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
-.light-yellow{
-  background-color: #fdf6c4;
-}
-
-.edu-img{
+.edu-img {
   width: 100px;
   height: auto;
 }
 
-.imgsize{
+.page-image{
+  width: 600px;
+  height: 300px;
+  border: 3px solid black;
+  margin-bottom: 20px;
+}
+
+.imgsize {
   height: 20vh;
   width: 50vw;
 }
-
 
 /* Media Query for smaller screens */
 @media screen and (max-width: 1200px) {
@@ -147,4 +153,3 @@ tr:nth-child(even) {
     padding-left: 20vw;
   }
 }
-

@@ -31,18 +31,25 @@ $display .= "</div>";
 
 // Display Interesting Facts
 $interestingFacts = $xmlDoc->getElementsByTagName("fact");
-$display .= "<br><h4>Fun Facts</h4><div style='margin-bottom: 40px;' class='info-section light-yellow'><ol>";
+$display .= "<br><h4>Fun Facts</h4><div class='info-section'><p>";
 foreach ($interestingFacts as $fact) {
     $title = $fact->getElementsByTagName("title")->item(0);
     $description = $fact->getElementsByTagName("description")->item(0);
+    $image = $fact->getElementsByTagName("image")->item(0);
 
     if ($title && $description) {
         $titleValue = $title->nodeValue;
         $descriptionValue = $description->nodeValue;
-        $display .= "<li><strong>$titleValue</strong>: $descriptionValue</li><br>";
+        $display .= "<p><strong>$titleValue</strong>: $descriptionValue<br></p>";
+        // Check if the image element exists before accessing its nodeValue
+        if ($image) {
+            $imageValue = $image->nodeValue;
+            $display .= "<img style='width: 20vw; height: auto; border: 2px solid black; margin: 10px; margin-top: 0px;' src='$imageValue'>";
+        }
     }
+    
 }
-$display .= "</ol></div>";
+$display .= "</p></div><br>";
 
 // Output the generated content
 echo $display;
