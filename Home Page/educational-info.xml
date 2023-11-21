@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<railwayInfo>
+<educational-info>
     <history>
         <events>
             <event>
@@ -114,4 +114,4 @@
             <description>The Channel Tunnel, connecting England and France, is one of the most expensive railway projects, costing over £4.65 billion to construct.</description>
         </fact>
     </interestingFacts>
-</railwayInfo>
+</educational-info>

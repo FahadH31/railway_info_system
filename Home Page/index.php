@@ -245,7 +245,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Railway System</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <link type="text/css" rel="stylesheet" href="indexStylesheet.css">
+  <link type="text/css" rel="stylesheet" href="index-stylesheet.css">
 </head>
 
 <body>
@@ -650,16 +650,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
       <div class="tab-pane fade" id="edu-info">
         <h2>Educational Information</h2>
 
-        <div id="railwayInfo">
+        <div id="educational-info">
           <?php
           // Include the PHP file that generates the XML content
-          include 'display-railway-info.php';
+          include 'display-educational-info.php';
           ?>
         </div>
 
         <!-- SOAP stuff -->
         <script>
-          fetch('http://localhost/RailwaySystemWebsite/Home%20Page/displayedu.php')
+          fetch('http://localhost/RailwaySystemWebsite/Home%20Page/rest.php')
             .then(response => {
               if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -671,7 +671,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
 
               if (Array.isArray(data)) {
                 data.forEach(info => {
-                  html += `<p><b>${info.Header}</b><br>${info.information}</p><img style="height: 20vw; width=50vw;" src="${info.images}"><br><br>`;
+                  html += `<p><b>${info.Header}</b><br>${info.information}</p><img style="height: 20vw; width=50vw; border: 3px solid black;" src="${info.images}"><br><br>`;
                 });
                 html += '</p>';
 

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <xs:element name="railwayInfo">
+    <xs:element name="educational-info">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="history" type="historyType"/>

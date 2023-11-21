@@ -1,5 +1,5 @@
 <?php
-$xmlFile = "railwayInfo.xml";
+$xmlFile = "educational-info.xml";
 $xmlDoc = new DOMDocument();
 $xmlDoc->load($xmlFile);
 
@@ -23,7 +23,7 @@ foreach ($historyEvents as $event) {
         // Check if the image element exists before accessing its nodeValue
         if ($image) {
             $imageValue = $image->nodeValue;
-            $display .= "<img style='width: 20vw; height: auto; border: 2px solid black; margin: 10px; margin-top: 0px;' src='$imageValue'>";
+            $display .= "<img style='width: 20vw; height: auto; border: 3px solid black; margin: 10px; margin-top: 0px;' src='$imageValue'>";
         }
     }
 }
@@ -44,7 +44,7 @@ foreach ($interestingFacts as $fact) {
         // Check if the image element exists before accessing its nodeValue
         if ($image) {
             $imageValue = $image->nodeValue;
-            $display .= "<img style='width: 20vw; height: auto; border: 2px solid black; margin: 10px; margin-top: 0px;' src='$imageValue'>";
+            $display .= "<img style='width: 20vw; height: auto; border: 3px solid black; margin: 10px; margin-top: 0px;' src='$imageValue'>";
         }
     }
     
