@@ -2,7 +2,7 @@
 
 session_start();
 // Connect to the database
-$conn = mysqli_connect('localhost:3306', 'root', 'fahad1306', 'RailwaySystemWebsite');
+$conn = mysqli_connect('localhost:3306', 'root', '123456', 'RailwaySystemWebsite');
 
 // Check connection
 if (!$conn) {
@@ -66,6 +66,27 @@ if (!$conn) {
     $PossibleDestination = mysqli_fetch_all($DestRoute, MYSQLI_ASSOC);
 
   }
+
+
+  //View 7.5
+
+
+    $Dest2 = "SELECT 
+    U.Location AS CurrentLocation, 
+    S.Location AS PossibleDestination
+FROM 
+    User U 
+JOIN 
+    Routes R ON U.Location = (SELECT S.Location FROM Stations S WHERE S.StationID = R.StartStation) 
+JOIN 
+    Stations S ON R.EndStation = S.StationID
+GROUP BY 
+    U.Location, 
+    S.Location";
+
+    $DestRoute2 = mysqli_query($conn, $Dest2);
+    $PossibleDestination2 = mysqli_fetch_all($DestRoute2, MYSQLI_ASSOC);
+
 
   //View 8
   $TRange = 'SELECT Routes.RouteID, RunningTimes.StartTime, Routes.StartStation FROM Routes JOIN RunningTimes ON Routes.RouteID = RunningTimes.RouteID WHERE RunningTimes.StartTime BETWEEN "09:00:00" AND "13:00:00"';
@@ -643,6 +664,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
             ?>
           </table>
           <br><br>
+          <h4>All Stations</h4>
+          <table>
+          <thead>
+                    <tr>
+                      <th>Origin</th>
+                      <th>Destination</th>
+                    </tr>
+                  </thead>
+            <?php
+            // Check if the user is logged in (based on the session variable)
+            
+
+              foreach ($PossibleDestination2 as $PD2) {
+                echo '
+                  
+                  <tbody>
+                    <tr>
+                    <td>' . $PD2["CurrentLocation"] . '</td>
+                    <td>' . $PD2["PossibleDestination"] . '</td>
+                    </tr>
+                  </tbody>';
+              }
+            ?>
+          </table>
+
         </div>
       </div>
 
