@@ -18,7 +18,7 @@ Download MySQL Workbench 8.0 and create a workspace under the name of "RailwaySy
  <br>
 4)
 <br>
-Copy the tables from tablesndata.pdf and run them as a query within the 'railwaysystemwebsite' schema in the order of tables, insert data, then views.
+Copy the tables from tablesndata.pdf and run them as a query within the 'railwaysystemwebsite' schema in the order of tables then views.
 <br>
 5)
 <br>
