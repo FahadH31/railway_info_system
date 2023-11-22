@@ -32,7 +32,7 @@ $RailCarInfo = mysqli_fetch_all($RCI2, MYSQLI_ASSOC);
 
 
 
-//RS2 5
+//View 5
 $RS = 'SELECT * 
                 FROM RunningTimes';
   $RS2 = mysqli_query($conn, $RS);

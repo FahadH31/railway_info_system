@@ -309,7 +309,7 @@
           <thead>
             <tr>
               <th>Train No.</th>
-              <th>Maximum Load (kgs)</th>
+              <th>Weight (tons)</th>
               <th>Passenger Capacity</th>
             </tr>
           </thead>
@@ -330,7 +330,7 @@
           </tbody>
         </table>
         <br>
-        <h4>Engine & Car Models</h4>
+        <h4>Engine & RailCar Models</h4>
         <table>
           <thead>
             <tr>
@@ -378,12 +378,14 @@
 
       <!-- Stations Tab -->
       <div class="tab-pane fade" id="stations">
-        <h2>Stations Content</h2>
+        <h2>Stations</h2>
         <img src="../Images/train-station.jpg" class="page-image">
         <div id="station-info">
           <h4>My Stations</h4>
           <table>
             <?php
+
+            if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
             echo '
             <thead>
               <tr>
@@ -391,6 +393,8 @@
                 <th>Possible Destinations</th>
               </tr>
             </thead>';
+
+            }
             // Check if the user is logged in (based on the session variable)
             if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
               foreach ($PossibleDestination as $PD) {
@@ -446,7 +450,7 @@
           ?>
         </div>
 
-        <!-- SOAP stuff -->
+        <!-- REST stuff -->
         <script>
           fetch('http://localhost/RailwaySystemWebsite/Home%20Page/rest.php')
             .then(response => {
