@@ -1,11 +1,24 @@
 <?php
 
-$conn = mysqli_connect('localhost:3306', 'root', 'fahad1306', 'RailwaySystemWebsite');
+// Load environment variables
+require_once __DIR__ . '/../vendor/autoload.php'; 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__); 
+$dotenv->load();
+
+// Database connection using .env variables
+$host = $_ENV['DB_HOST'];
+$port = $_ENV['DB_PORT'];
+$user = $_ENV['DB_USER'];
+$password = $_ENV['DB_PASSWORD'];
+$db_name = $_ENV['DB_NAME'];
+
+$conn = mysqli_connect("$host:$port", $user, $password, $db_name);
 
 // Check connection
 if (!$conn) {
-  echo 'Connection error: ' . mysqli_connect_error();
+    echo 'Connection error: ' . mysqli_connect_error();
 }
+
 // Endpoint to fetch educational information
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // Fetch educational information from the database

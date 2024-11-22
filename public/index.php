@@ -12,20 +12,20 @@
 <body>
   <?php
     // Include required PHP files
-    require_once('db-connection.php');
-    require_once('views.php');
-    require_once('account-operations.php');
+    require_once(__DIR__ . '/../src/db-connection.php');
+    require_once(__DIR__ . '/../src/views.php');
+    require_once(__DIR__ . '/../src/account-operations.php');
   ?>
 
   <!-- Navigation Bar -->
   <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand"><img id="logo" src="..\Images\train-icon.png"></a>
+    <a class="navbar-brand"><img id="logo" src="Images\train-icon.png"></a>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" href="index.php">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../About Page/about.html">About Us</a>
+        <a class="nav-link" href="about.html">About Us</a>
       </li>
     </ul>
     <?php
@@ -36,7 +36,7 @@
       echo '<form action="logout.php" method="post"><button type="submit" class="btn btn-dark login-signup-btn nav-link">Logout</button></form>';
     } else {
       // Show the login/signup link if not logged in
-      echo '<a id="login-link" class="nav-link btn btn-dark login-signup-btn" href="..\Account Pages\signup.html">Login/Signup</a>';
+      echo '<a id="login-link" class="nav-link btn btn-dark login-signup-btn" href="signup.html">Login/Signup</a>';
     }
     ?>
     </button>
@@ -137,8 +137,8 @@
           //Do nothing
         } else {
           // Show the prompt to login/signup link if not logged in
-          echo '<p id="login-signup-msg">To purchase tickets, <a href="..\Account Pages\signup.html">Create an Account</a> or <a
-          href="..\Account Pages\login.html">Log in.</a></p>';
+          echo '<p id="login-signup-msg">To purchase tickets, <a href="signup.html">Create an Account</a> or <a
+          href="login.html">Log in.</a></p>';
         }
         ?>
 
@@ -408,8 +408,8 @@
               }
             } else {
               // Show the prompt to login/signup link if not logged in
-              echo '<p id="login-signup-msg">To view nearby stations, <a href="..\Account Pages\signup.html">Create an Account</a> or <a
-              href="..\Account Pages\login.html">Log in.</a></p>';
+              echo '<p id="login-signup-msg">To view nearby stations, <a href="signup.html">Create an Account</a> or <a
+              href="login.html">Log in.</a></p>';
             }
             ?>
           </table>
@@ -446,13 +446,13 @@
         <div id="educational-info">
           <?php
           // Include the PHP file that generates the XML content
-          include 'display-educational-info.php';
+          include __DIR__ . '/../src/display-educational-info.php';
           ?>
         </div>
 
         <!-- REST stuff -->
         <script>
-          fetch('http://localhost/RailwaySystemWebsite/Home%20Page/rest.php')
+          fetch('rest.php')
             .then(response => {
               if (!response.ok) {
                 throw new Error('Network response was not ok');

@@ -1,5 +1,5 @@
 <?php
-$xmlFile = "educational-info.xml";
+$xmlFile = "../data/educational-info.xml";
 $xmlDoc = new DOMDocument();
 $xmlDoc->load($xmlFile);
 
