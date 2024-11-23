@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+// Load environment variables
+require_once __DIR__ . '/../vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 // Database connection using .env variables
 $host = $_ENV['MYSQLHOST'];
 $port = $_ENV['MYSQLPORT'];
