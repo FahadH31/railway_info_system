@@ -11,20 +11,3 @@ A web-based information system for our (fictional) railway network.<br>
 ![6](https://github.com/FahadH31/railway-system-website/assets/129327022/a8fc1c17-6b5e-4a61-94f5-79ebfcb990f6)<br><br>
 ![7](https://github.com/FahadH31/railway-system-website/assets/129327022/361bed92-a24e-4da7-a209-4acdfd9af2a8)<br><br>
 ![8](https://github.com/FahadH31/railway-system-website/assets/129327022/bf07429a-b73f-40a0-996c-20d0052fbfe9)<br><br>
-
-<b>How to run our code:</b>
-1. Download Wamp into your 'C:' Drive
-<br><br>
-2. Clone our git repository and save it under 'C:\wamp64\www\'
-<br><br>
-3. Download MySQL Workbench 8.0 and create a workspace under the name of "RailwaySystemWebsite" with the username 'root', the password {youruserpassword},
-and under port 3306. Then create a schema with the name railwaysystemwebsite and open the schema.
-<br><br>
-4. Copy the tables from tablesndata.txt and run them as a query within the 'railwaysystemwebsite' schema in the order of tables then views.
-<br><br>
-5. Open the code and under the file db-connection.php in line 4 change the password to your MySql Workbench 8.0 password. Then do the same for rest.php line 3.
-<br><br>
-6. Run wamp.exe on your computer to ensure that the server is connected to the database and php is able to make queries.
-<br><br>
-7. Open google and type in http://localhost/RailwaySystemWebsite/Home%20Page/ to access our website and interact with the database.
-<br><br>
