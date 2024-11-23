@@ -1,16 +1,11 @@
 <?php
 
-// Load environment variables
-require_once __DIR__ . '/../vendor/autoload.php'; 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__); 
-$dotenv->load();
-
 // Database connection using .env variables
-$host = $_ENV['DB_HOST'];
-$port = $_ENV['DB_PORT'];
-$user = $_ENV['DB_USER'];
-$password = $_ENV['DB_PASSWORD'];
-$db_name = $_ENV['DB_NAME'];
+$host = $_ENV['MYSQLHOST'];
+$port = $_ENV['MYSQLPORT'];
+$user = $_ENV['MYSQLUSER'];
+$password = $_ENV['MYSQLPASSWORD'];
+$db_name = $_ENV['MYSQLDATABASE'];
 
 $conn = mysqli_connect("$host:$port", $user, $password, $db_name);
 

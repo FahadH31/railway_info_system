@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $userLocation = $_POST['location'];
 
       // Check if the username already exists
-      $checkQuery = "SELECT COUNT(*) as count FROM User WHERE Username = '$username'";
+      $checkQuery = "SELECT COUNT(*) as count FROM user WHERE Username = '$username'";
       $result = $conn->query($checkQuery);
 
       if ($result) {
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         } else {
           // Username doesn't exist, proceed with insertion
-          $sql = "INSERT INTO User (Username, UserPassword,Location) VALUES ('$username', '$userPassword', '$userLocation')";
+          $sql = "INSERT INTO user (Username, UserPassword,Location) VALUES ('$username', '$userPassword', '$userLocation')";
 
           if ($conn->query($sql) === TRUE) {
             echo "<script>alert('Account Successfully Created. Please login');</script>";
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userPasswordlogin = $_POST['uplogin'];
 
     // Check if the username exists and password matches
-    $checkQuery = "SELECT UserPassword FROM User WHERE Username = '$usernamelogin'";
+    $checkQuery = "SELECT UserPassword FROM user WHERE Username = '$usernamelogin'";
     $result2 = $conn->query($checkQuery);
 
     if ($result2 && $result2->num_rows > 0) {
@@ -79,7 +79,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
   $loggedInUsername = $_SESSION['username'];
 
   // Query to fetch tickets owned by the logged-in user
-  $getUserTicketsQuery = "SELECT RouteID, TicketType, COUNT(*) as TicketCount FROM UserTickets WHERE Username = '$loggedInUsername' GROUP BY RouteID, TicketType";
+  $getUserTicketsQuery = "SELECT RouteID, TicketType, COUNT(*) as TicketCount FROM usertickets WHERE Username = '$loggedInUsername' GROUP BY RouteID, TicketType";
 
   // Execute the query
   $userTicketsResult = mysqli_query($conn, $getUserTicketsQuery);
@@ -98,7 +98,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     $username = $_SESSION['username'];
 
     // Fetch the cost of the ticket based on the selected ticket type and route
-    $ticketQuery = "SELECT Cost FROM Ticket WHERE AgeType = '$ticketType'";
+    $ticketQuery = "SELECT Cost FROM ticket WHERE AgeType = '$ticketType'";
     $ticketResult = mysqli_query($conn, $ticketQuery);
 
     if ($ticketResult && $ticketResult->num_rows > 0) {
@@ -106,7 +106,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
       $cost = $ticket['Cost'];
 
       // Insert ticket details into UserTickets table
-      $insertQuery = "INSERT INTO UserTickets (Username, RouteID, TicketType) VALUES ('$username', '$routeID', '$ticketType')";
+      $insertQuery = "INSERT INTO usertickets (Username, RouteID, TicketType) VALUES ('$username', '$routeID', '$ticketType')";
       if (mysqli_query($conn, $insertQuery)) {
         echo "<script>alert('Ticket Purchased');</script>";
         echo "<script>window.location.href = 'index.php';</script>";
@@ -131,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['removeTicket'])) {
   $loggedInUsername = $_SESSION['username'];
 
   // Query to remove one specified ticket for the logged-in user
-  $removeTicketQuery = "DELETE FROM UserTickets 
+  $removeTicketQuery = "DELETE FROM usertickets 
                         WHERE Username = '$loggedInUsername' 
                         AND RouteID = '$routeID' 
                         AND TicketType = '$ticketType' 
