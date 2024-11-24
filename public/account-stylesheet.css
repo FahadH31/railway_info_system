@@ -18,7 +18,7 @@ body {
   }
 
   .navbar-dark .navbar-nav .nav-link {
-    color: #ffffff;
+    color: black;
   }
 
   .navbar-dark .navbar-toggler-icon {
@@ -47,6 +47,21 @@ body {
     background-color: #F77A36;
     opacity: 50%;
     transition: 0.4s;
+  }
+
+  @media only screen and (max-width: 1000px) {
+    body{
+      font-size: 12pt;
+    }
+    
+    .navbar-nav{
+      display: flex;
+      flex-direction: row;
+    }
+  
+    .nav-link {
+      margin-right: 10px;
+    }
   }
 
   

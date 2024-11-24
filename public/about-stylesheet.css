@@ -1,4 +1,43 @@
+.navbar{
+    margin-bottom: 2vh;
+}
+
+h1{
+    margin-bottom: 2vh;
+}
+
 .content{
-    margin: 40px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    align-items: center;
+}
+
+p{
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
+
+.about-page-image{
+    max-width: 30vw;
+    height: auto;
+    border: 3px solid black;
+}
+
+@media only screen and (max-width: 1000px) {
+    .navbar{
+        margin-bottom: 0;
+    }
+    h1{
+        font-size: 25pt;
+    }
+    p{
+        margin-left: 2.5vw;
+        margin-right: 2.5vw;
+    }
+    .about-page-image{
+        max-width: 70vw;
+        height: auto;
+    }
 }
 

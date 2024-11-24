@@ -25,7 +25,7 @@
         <a class="nav-link" href="index.php">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="about.html">About Us</a>
+        <a class="nav-link" href="about.html">About</a>
       </li>
     </ul>
     <?php
@@ -114,6 +114,7 @@
       <div class="tab-pane fade show active" id="buy-tickets">
         <h2>Buy Tickets</h2>
         <img src="../Images/train-tickets.jpg" class="page-image">
+        <h4>Tickets</h4>
         <table>
           <tr>
             <th>Type</th>

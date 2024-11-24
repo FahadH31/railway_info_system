@@ -1,17 +1,22 @@
-/* Default styles for all screen sizes */
 body {
   background-color: #FFFFFF;
   font-size: 14pt;
 }
 
-
 h2 {
   background-color: black;
   color: #FFFFFF;
-  padding: 10px;
   border-radius: 15px;
-  margin-right: 50px;
-  margin-bottom: 20px;
+
+  padding: 13px;
+  padding-left: 16px;
+
+  margin-right: 2vw;
+  margin-bottom: 2vh;
+}
+
+#main-content {
+  display: flex;
 }
 
 /* Navbar Formatting */
@@ -29,8 +34,12 @@ h2 {
   color: black;
 }
 
-.navbar-dark .navbar-toggler-icon {
-  background-color: #ffffff;
+.nav-link {
+  transition: 0.2s;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: white;
 }
 
 #login-link {
@@ -76,16 +85,20 @@ h2 {
 
 /* Tab List */
 #myTabs {
-  float: left;
+  border-bottom: none;
   border-radius: 15px;
   font-weight: 500;
+
   margin-left: 1vw;
+  margin-right: 2vw;
   margin-top: 2vh;
+
+  max-width: 25vw;
 }
 
 .tab-pane {
   padding-top: 2vh;
-  padding-left: 16vw;
+  width: 75vw;
 }
 
 table {
@@ -112,9 +125,9 @@ tr:nth-child(even) {
 
 #educational-content,
 .info-section {
-  margin-right: 10vw;
   background-color: #dfdede;
   border-radius: 15px;
+
   padding-right: 15px;
   padding-left: 15px;
   padding-top: 10px;
@@ -126,30 +139,74 @@ tr:nth-child(even) {
   height: auto;
 }
 
-.page-image{
+.page-image {
   width: 600px;
   height: 300px;
   border: 3px solid black;
   margin-bottom: 20px;
 }
 
-.imgsize {
-  height: 20vh;
-  width: 50vw;
-}
-
-/* Media Query for smaller screens */
-@media screen and (max-width: 1200px) {
-  /* Adjustments for smaller screens */
-  .tab-pane {
-    padding-left: 25vw;
+/*Mobile Styling*/
+@media only screen and (max-width: 1000px) {
+  body{
+    font-size: 12pt;
   }
-}
 
-/* Media Query for smaller screens */
-@media screen and (max-width: 1700px) {
-  /* Adjustments for smaller screens */
-  .tab-pane {
-    padding-left: 20vw;
+  .navbar-nav{
+    display: flex;
+    flex-direction: row;
   }
+
+  .nav-link {
+    margin-right: 10px;
+  }
+
+  #logo {
+    width: 45px;
+    height: 40px;
+  }
+
+  .login-signup-btn {
+    font-size: 12pt;
+    margin-right: 0px;
+  }
+
+  #main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #myTabs {
+    max-width: 95vw;
+    width: 95vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  h2 {
+    display: none;
+  }
+
+  .page-image {
+    display: none;
+  }
+
+  .tab-pane {
+    width: 100vw;
+    padding: 20px;
+  }
+
+  #educational-content,
+  .info-section {
+    background-color: #dfdede;
+    border-radius: 15px;
+  }
+
+  .edu-img {
+    width: 200px;
+    height: auto;
+  }
+
+
 }
