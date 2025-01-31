@@ -94,7 +94,7 @@ session_start();
 
         foreach ($userTickets as $ticket) {
           echo '<tr>';
-          echo '<form method="post" action="index.php">'; // Assuming remove_ticket.php is the script handling deletions
+          echo '<form method="post" action="index.php">';
           echo '<td>' . $ticket["RouteID"] . '</td>';
           echo '<td>' . $ticket["TicketType"] . '</td>';
           echo '<td>' . $ticket["TicketCount"] . '</td>';
